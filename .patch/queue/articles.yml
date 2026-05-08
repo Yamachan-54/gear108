@@ -19,7 +19,8 @@ queue:
     category: keyboard
     topic: "Realforce R3 と HHKB Pro HYBRID Type-S を、エンジニアの実務観点で徹底比較"
     priority: high
-    status: pending
+    status: done
+    completed_at: 2026-05-09
 
   - slug: keychron-q1-pro-review
     collection: reviews
