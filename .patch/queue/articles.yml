@@ -13,7 +13,7 @@
 #   notes:       自由記述（参考URL等）
 
 queue:
-  # ─── キーボード ───
+  # ─── DONE（write-next.sh は status=done をスキップする）───
   - slug: realforce-r3-vs-hhkb-pro-hybrid
     collection: roundups
     category: keyboard
@@ -22,6 +22,50 @@ queue:
     status: done
     completed_at: 2026-05-09
 
+  # ─── 2026-W19 picks（週次レビューで Patch が選定。Mon→Fri の順）───
+  # 並びの根拠は .patch/reports/weekly-2026-W19.md を参照。
+  - slug: new-engineer-gear-2026
+    collection: guides
+    category: pc
+    topic: "新人エンジニア向け2026年版・最初の在宅装備一式（10万円・20万円・40万円コース）"
+    priority: high
+    status: pending
+    notes: "W19-Mon: ピラー記事。サイト全体の内部リンクハブにする"
+
+  - slug: dell-u2725qe-review
+    collection: reviews
+    category: monitor
+    topic: "Dell U2725QE 4K 27インチモニターのレビュー。USB-C 90W 給電とKVM機能"
+    product: "Dell U2725QE"
+    priority: high
+    status: pending
+    notes: "W19-Tue: 既存 seed に monitor 無し。USB-C 90W+KVM で検索意図明確"
+
+  - slug: 4k-27-inch-best-2026
+    collection: roundups
+    category: monitor
+    topic: "2026年版・エンジニア向け4K 27インチモニター おすすめ7選"
+    priority: high
+    status: pending
+    notes: "W19-Wed: 火曜 review と内部リンクで束ねる。検索量高"
+
+  - slug: aeron-vs-okamura-contessa
+    collection: roundups
+    category: desk
+    topic: "アーロンチェア リマスタード vs オカムラ コンテッサ セコンダ：エンジニアの腰を救うのは"
+    priority: high
+    status: pending
+    notes: "W19-Thu: flexispot seed と隣接。客単価高"
+
+  - slug: m4-macbook-air-vs-mac-mini
+    collection: roundups
+    category: pc
+    topic: "M4 MacBook Air と M4 Mac mini、開発機にするならどちらか"
+    priority: high
+    status: pending
+    notes: "W19-Fri: m4-mac-mini-dev-machine seed と軸違い（形態の選び方）で補完"
+
+  # ─── キーボード ───
   - slug: keychron-q1-pro-review
     collection: reviews
     category: keyboard
@@ -38,14 +82,6 @@ queue:
     status: pending
 
   # ─── モニター ───
-  - slug: dell-u2725qe-review
-    collection: reviews
-    category: monitor
-    topic: "Dell U2725QE 4K 27インチモニターのレビュー。USB-C 90W 給電とKVM機能"
-    product: "Dell U2725QE"
-    priority: high
-    status: pending
-
   - slug: ultrawide-vs-dual-monitor
     collection: guides
     category: monitor
@@ -53,21 +89,7 @@ queue:
     priority: normal
     status: pending
 
-  - slug: 4k-27-inch-best-2026
-    collection: roundups
-    category: monitor
-    topic: "2026年版・エンジニア向け4K 27インチモニター おすすめ7選"
-    priority: high
-    status: pending
-
   # ─── PC・ノート ───
-  - slug: m4-macbook-air-vs-mac-mini
-    collection: roundups
-    category: pc
-    topic: "M4 MacBook Air と M4 Mac mini、開発機にするならどちらか"
-    priority: high
-    status: pending
-
   - slug: thinkpad-x1-carbon-gen13-review
     collection: reviews
     category: pc
@@ -85,13 +107,6 @@ queue:
     status: pending
 
   # ─── デスク・椅子 ───
-  - slug: aeron-vs-okamura-contessa
-    collection: roundups
-    category: desk
-    topic: "アーロンチェア リマスタード vs オカムラ コンテッサ セコンダ：エンジニアの腰を救うのは"
-    priority: high
-    status: pending
-
   - slug: standing-desk-best-2026
     collection: roundups
     category: desk
@@ -199,13 +214,6 @@ queue:
     status: pending
 
   # ─── ガイド・選び方（横断） ───
-  - slug: new-engineer-gear-2026
-    collection: guides
-    category: pc
-    topic: "新人エンジニア向け2026年版・最初の在宅装備一式（10万円・20万円・40万円コース）"
-    priority: high
-    status: pending
-
   - slug: home-office-essential-7
     collection: guides
     category: desk
