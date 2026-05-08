@@ -42,14 +42,13 @@ PROJECT_NAME="gear108"
 echo "==> npm run build"
 npm run build
 
-echo "==> Cloudflare Pages にプロジェクトを作成（既存ならスキップ）"
-npx wrangler pages project create "$PROJECT_NAME" \
-  --production-branch=main \
-  --compatibility-date="$(date +%Y-%m-%d)" 2>&1 || \
-  echo "  （既存の可能性あり、続行）"
-
-echo "==> 初回デプロイ"
-npx wrangler pages deploy dist --project-name="$PROJECT_NAME" --branch=main
+echo "==> Cloudflare Pages へデプロイ（プロジェクトが無ければ自動作成）"
+# wrangler pages deploy は project が無ければ対話的に作成してくれる。
+# project create を別ステップで叩くと compatibility-date 問題で詰まるため統合した。
+npx wrangler pages deploy dist \
+  --project-name="$PROJECT_NAME" \
+  --branch=main \
+  --commit-dirty=true
 
 echo ""
 echo "==> 完了。本番URL:"
