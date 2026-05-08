@@ -1,0 +1,66 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { CATEGORY_LABELS, COLLECTION_LABELS } from '../../content.config';
+import type { Category, CollectionName } from '../../content.config';
+
+export async function getStaticPaths() {
+  const cats = Object.keys(CATEGORY_LABELS) as Category[];
+  return cats.map((category) => ({ params: { category } }));
+}
+
+const { category } = Astro.params as { category: Category };
+const collectionTypes = Object.keys(COLLECTION_LABELS) as CollectionName[];
+
+type Item = {
+  collection: CollectionName;
+  slug: string;
+  data: any;
+};
+
+const buckets = await Promise.all(
+  collectionTypes.map((c) =>
+    getCollection(c, ({ data }) => !data.draft && data.category === category),
+  ),
+);
+const items: Item[] = buckets
+  .flatMap((entries, i) =>
+    entries.map((e) => ({
+      collection: collectionTypes[i]!,
+      slug: e.id,
+      data: e.data,
+    })),
+  )
+  .sort((a, b) => +new Date(b.data.pubDate) - +new Date(a.data.pubDate));
+
+const label = CATEGORY_LABELS[category];
+---
+<BaseLayout
+  title={`${label} | カテゴリ`}
+  description={`${label}に関するレビュー・比較・ニュース・選び方ガイド・セール情報`}
+>
+  <nav class="text-xs text-zinc-500 mb-4">
+    <a href="/" class="hover:text-orange-300">ホーム</a>
+    <span class="mx-1">/</span>
+    <span>カテゴリ: {label}</span>
+  </nav>
+  <h1 class="text-2xl font-bold mb-6">{label}</h1>
+  {items.length === 0 ? (
+    <p class="text-zinc-500">このカテゴリにはまだ記事がありません。</p>
+  ) : (
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {items.map((item) => (
+        <ProductCard
+          href={`/${item.collection}/${item.slug}/`}
+          title={item.data.title}
+          description={item.data.description}
+          image={item.data.heroImage}
+          pubDate={new Date(item.data.pubDate)}
+          category={label}
+          badge={COLLECTION_LABELS[item.collection]}
+        />
+      ))}
+    </div>
+  )}
+</BaseLayout>

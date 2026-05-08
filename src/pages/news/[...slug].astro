@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('news', ({ data }) => !data.draft);
+  return items.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<BlogPostLayout
+  title={d.title}
+  description={d.description}
+  pubDate={d.pubDate}
+  updatedDate={d.updatedDate}
+  heroImage={d.heroImage}
+  category={d.category}
+  tags={d.tags}
+  collection="news"
+>
+  <Content />
+  {d.sourceUrl && (
+    <p class="mt-6 text-sm text-zinc-500">
+      参考: <a class="underline hover:text-orange-300" href={d.sourceUrl} rel="noopener" target="_blank">{d.source ?? d.sourceUrl}</a>
+    </p>
+  )}
+</BlogPostLayout>

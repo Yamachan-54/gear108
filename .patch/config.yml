@@ -1,0 +1,58 @@
+# Patch 運用設定
+# 編集後は scripts/*.sh が次回実行時に読み込む。
+
+site:
+  url: https://gear108.pages.dev
+  repo_path: /home/yamachan/Public/Project/gear108
+  build_command: npm run build
+
+writing:
+  # 平日5本/週、月-金の21:00 に1本ずつ
+  schedule_cron: "0 21 * * 1-5"
+  max_articles_per_day: 1
+  draft_first: false  # true にすると draft: true で書き、人間レビュー後 false に変える運用
+  default_tags_min: 3
+
+refresh:
+  # 日曜 22:00 に古い記事を1本更新
+  schedule_cron: "0 22 * * 0"
+  age_threshold_days: 90
+  max_refreshes_per_day: 3
+
+health_check:
+  # 1時間ごと
+  schedule_cron: "0 * * * *"
+  endpoints:
+    - /
+    - /sitemap-index.xml
+    - /reviews/
+  fail_threshold: 2  # 連続失敗2回で通知
+
+weekly_review:
+  # 日曜 23:00
+  schedule_cron: "0 23 * * 0"
+
+reporting:
+  daily_report_time: "07:00"
+  report_dir: .patch/reports
+  retain_days: 90
+
+notifications:
+  # 通知先（任意）— 必要なら有効化
+  # line_token: ""  # LINE Notify
+  # slack_webhook: ""
+  # mattermost_webhook: ""
+  log_only: true
+
+guardrails:
+  # AI生成記事の品質ガード
+  min_word_count: 800
+  required_sections:
+    - "結論"
+    - "悪い知らせ"
+  must_disclose_unverified: true
+  forbid_phrases:
+    - "簡単です"
+    - "誰でもすぐに"
+    - "100%"
+  cost_per_article_estimate_jpy: 50  # 月次コスト試算用

@@ -1,0 +1,30 @@
+---
+type Store = 'amazon' | 'rakuten' | 'yodobashi' | 'biccamera' | 'official';
+
+interface Props {
+  href: string;
+  store: Store;
+  label?: string;
+}
+
+const { href, store, label } = Astro.props;
+
+const STORE_NAMES: Record<Store, string> = {
+  amazon: 'Amazon',
+  rakuten: '楽天市場',
+  yodobashi: 'ヨドバシ',
+  biccamera: 'ビックカメラ',
+  official: '公式サイト',
+};
+
+const meta = STORE_NAMES[store];
+---
+<a
+  href={href}
+  rel="sponsored noopener"
+  target="_blank"
+  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-neutral-300 bg-white text-neutral-800 text-sm no-underline hover:bg-neutral-50 hover:border-neutral-400 transition-colors"
+>
+  <span>{label ?? `${meta}で見る`}</span>
+  <span aria-hidden="true" class="text-neutral-400">↗</span>
+</a>

@@ -1,0 +1,71 @@
+name: health-check
+
+on:
+  schedule:
+    # 1時間ごと（UTC）
+    - cron: '15 * * * *'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Read site URL from config.yml
+        id: cfg
+        run: |
+          url=$(grep -E '^\s*url:' .patch/config.yml | head -1 | sed 's/^[[:space:]]*url:[[:space:]]*//' | tr -d '"')
+          echo "site=$url" >> "$GITHUB_OUTPUT"
+          echo "Site: $url"
+
+      - name: Check endpoints
+        env:
+          SITE: ${{ steps.cfg.outputs.site }}
+        run: |
+          set -uo pipefail
+          ERRORS=0
+          for path in "/" "/sitemap-index.xml" "/reviews/" "/categories/keyboard/"; do
+            url="${SITE}${path}"
+            status=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 10 "$url" || echo "000")
+            echo "$status $url"
+            if [ "$status" != "200" ]; then
+              ERRORS=$((ERRORS + 1))
+            fi
+          done
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::health check failed with $ERRORS errors"
+            exit 1
+          fi
+
+      - name: Check TLS expiry
+        env:
+          SITE: ${{ steps.cfg.outputs.site }}
+        run: |
+          host="${SITE#https://}"
+          host="${host%%/*}"
+          exp=$(echo | openssl s_client -servername "$host" -connect "${host}:443" 2>/dev/null \
+            | openssl x509 -noout -enddate | sed 's/^notAfter=//')
+          exp_epoch=$(date -d "$exp" +%s)
+          now_epoch=$(date +%s)
+          days=$(( (exp_epoch - now_epoch) / 86400 ))
+          echo "TLS expires in $days days ($exp)"
+          if [ "$days" -lt 14 ]; then
+            echo "::warning::TLS expires in $days days"
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          # 通知設定があれば有効化（Secrets に LINE_NOTIFY_TOKEN / SLACK_WEBHOOK 等を入れる）
+          if [ -n "${{ secrets.LINE_NOTIFY_TOKEN }}" ]; then
+            curl -sS -X POST -H "Authorization: Bearer ${{ secrets.LINE_NOTIFY_TOKEN }}" \
+              -F "message=[gear108] health check failed at $(date -u +%FT%TZ)" \
+              https://notify-api.line.me/api/notify
+          fi
+          if [ -n "${{ secrets.SLACK_WEBHOOK_URL }}" ]; then
+            curl -sS -X POST -H "Content-Type: application/json" \
+              -d "{\"text\":\"[gear108] health check failed at $(date -u +%FT%TZ)\"}" \
+              "${{ secrets.SLACK_WEBHOOK_URL }}"
+          fi

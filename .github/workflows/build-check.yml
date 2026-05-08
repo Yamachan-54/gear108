@@ -1,0 +1,39 @@
+name: build-check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Astro build
+        run: npm run build
+
+      - name: Verify sitemap exists
+        run: test -f dist/sitemap-index.xml
+
+      - name: Verify HTML pages exist
+        run: |
+          test -f dist/index.html
+          test -f dist/reviews/index.html
+          count=$(find dist -name '*.html' | wc -l)
+          echo "HTML pages: $count"
+          if [ "$count" -lt 5 ]; then
+            echo "::error::HTML count too low: $count"
+            exit 1
+          fi

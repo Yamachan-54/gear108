@@ -1,0 +1,59 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+import PriceComparison from '../../components/PriceComparison.astro';
+
+export async function getStaticPaths() {
+  const items = await getCollection('reviews', ({ data }) => !data.draft);
+  return items.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const d = entry.data;
+---
+<BlogPostLayout
+  title={d.title}
+  description={d.description}
+  pubDate={d.pubDate}
+  updatedDate={d.updatedDate}
+  heroImage={d.heroImage}
+  category={d.category}
+  tags={d.tags}
+  collection="reviews"
+>
+  {d.rating && (
+    <p class="text-base font-semibold text-neutral-800 mb-2">
+      評価: {'★'.repeat(Math.round(d.rating))}{'☆'.repeat(5 - Math.round(d.rating))}
+      <span class="text-neutral-500 text-sm ml-2 font-normal">({d.rating.toFixed(1)} / 5)</span>
+    </p>
+  )}
+
+  {(d.pros.length > 0 || d.cons.length > 0) && (
+    <div class="grid md:grid-cols-2 gap-4 my-6 text-sm">
+      {d.pros.length > 0 && (
+        <div class="border border-neutral-200 rounded p-4 bg-neutral-50">
+          <h3 class="font-bold text-sm mb-2">良かった点</h3>
+          <ul class="space-y-1 list-disc pl-5">
+            {d.pros.map((p) => <li>{p}</li>)}
+          </ul>
+        </div>
+      )}
+      {d.cons.length > 0 && (
+        <div class="border border-neutral-200 rounded p-4 bg-neutral-50">
+          <h3 class="font-bold text-sm mb-2">気になった点</h3>
+          <ul class="space-y-1 list-disc pl-5">
+            {d.cons.map((c) => <li>{c}</li>)}
+          </ul>
+        </div>
+      )}
+    </div>
+  )}
+
+  <Content />
+
+  <PriceComparison links={d.affiliateLinks} productName={d.productName} />
+</BlogPostLayout>

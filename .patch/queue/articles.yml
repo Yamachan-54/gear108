@@ -1,0 +1,242 @@
+# 記事執筆キュー
+# scripts/write-next.sh が先頭の `pending` を取り、書き終わったら `done` に変える。
+# 順番を変えたいときは行を入れ替える。
+#
+# 各エントリ：
+#   slug:        ファイル名になる（小文字ハイフン区切り）
+#   collection:  reviews | roundups | news | guides | deals
+#   category:    keyboard | monitor | pc | desk | peripheral | storage | audio | power
+#   topic:       Patchが理解できる一文の指示
+#   product:     主軸製品名（任意）
+#   priority:    high | normal | low
+#   status:      pending | in_progress | done | skipped
+#   notes:       自由記述（参考URL等）
+
+queue:
+  # ─── キーボード ───
+  - slug: realforce-r3-vs-hhkb-pro-hybrid
+    collection: roundups
+    category: keyboard
+    topic: "Realforce R3 と HHKB Pro HYBRID Type-S を、エンジニアの実務観点で徹底比較"
+    priority: high
+    status: pending
+
+  - slug: keychron-q1-pro-review
+    collection: reviews
+    category: keyboard
+    topic: "Keychron Q1 Pro の長期使用レビュー。カスタムキーボード入門としての評価"
+    product: "Keychron Q1 Pro"
+    priority: normal
+    status: pending
+
+  - slug: cherry-mx-axis-comparison-2026
+    collection: guides
+    category: keyboard
+    topic: "Cherry MX 軸別の選び方ガイド：赤・青・茶・黒・銀軸 5種をエンジニア用途で比較"
+    priority: normal
+    status: pending
+
+  # ─── モニター ───
+  - slug: dell-u2725qe-review
+    collection: reviews
+    category: monitor
+    topic: "Dell U2725QE 4K 27インチモニターのレビュー。USB-C 90W 給電とKVM機能"
+    product: "Dell U2725QE"
+    priority: high
+    status: pending
+
+  - slug: ultrawide-vs-dual-monitor
+    collection: guides
+    category: monitor
+    topic: "ウルトラワイド1枚 vs デュアルモニター：エンジニアの開発効率を比較"
+    priority: normal
+    status: pending
+
+  - slug: 4k-27-inch-best-2026
+    collection: roundups
+    category: monitor
+    topic: "2026年版・エンジニア向け4K 27インチモニター おすすめ7選"
+    priority: high
+    status: pending
+
+  # ─── PC・ノート ───
+  - slug: m4-macbook-air-vs-mac-mini
+    collection: roundups
+    category: pc
+    topic: "M4 MacBook Air と M4 Mac mini、開発機にするならどちらか"
+    priority: high
+    status: pending
+
+  - slug: thinkpad-x1-carbon-gen13-review
+    collection: reviews
+    category: pc
+    topic: "ThinkPad X1 Carbon Gen 13 のレビュー。Linux/WSL 開発機としての評価"
+    product: "ThinkPad X1 Carbon Gen 13"
+    priority: normal
+    status: pending
+
+  - slug: framework-laptop-13-2026-review
+    collection: reviews
+    category: pc
+    topic: "Framework Laptop 13 (2026) レビュー。修理可能なノートPCはエンジニアに刺さるか"
+    product: "Framework Laptop 13"
+    priority: normal
+    status: pending
+
+  # ─── デスク・椅子 ───
+  - slug: aeron-vs-okamura-contessa
+    collection: roundups
+    category: desk
+    topic: "アーロンチェア リマスタード vs オカムラ コンテッサ セコンダ：エンジニアの腰を救うのは"
+    priority: high
+    status: pending
+
+  - slug: standing-desk-best-2026
+    collection: roundups
+    category: desk
+    topic: "2026年版・電動昇降スタンディングデスク おすすめ5選"
+    priority: normal
+    status: pending
+
+  - slug: monitor-arm-ergotron-lx-review
+    collection: reviews
+    category: desk
+    topic: "Ergotron LX モニターアームを5年使ったレビュー。妥協しないアーム選び"
+    product: "Ergotron LX"
+    priority: normal
+    status: pending
+
+  # ─── 周辺機器 ───
+  - slug: gan-charger-100w-best
+    collection: roundups
+    category: peripheral
+    topic: "100W GaN充電器 おすすめ5選。MacBook Pro 16 + iPhone + Watch を1台で"
+    priority: normal
+    status: pending
+
+  - slug: usb-c-hub-engineer-best
+    collection: roundups
+    category: peripheral
+    topic: "エンジニア向け USB-C ハブ おすすめ5選。Ethernet・HDMI・SD全部入り"
+    priority: normal
+    status: pending
+
+  - slug: logicool-mx-master-3s-vs-mx-vertical
+    collection: roundups
+    category: peripheral
+    topic: "Logicool MX Master 3S と MX Vertical：手首が痛くならないのはどちらか"
+    priority: normal
+    status: pending
+
+  # ─── ストレージ ───
+  - slug: synology-ds923plus-review
+    collection: reviews
+    category: storage
+    topic: "Synology DS923+ レビュー。エンジニアの自宅NAS、3年使った正直な評価"
+    product: "Synology DS923+"
+    priority: normal
+    status: pending
+
+  - slug: external-ssd-thunderbolt-best
+    collection: roundups
+    category: storage
+    topic: "Thunderbolt 対応 外付けSSD おすすめ5選。動画編集・ビルドキャッシュ用途"
+    priority: normal
+    status: pending
+
+  - slug: nas-vs-cloud-backup
+    collection: guides
+    category: storage
+    topic: "NAS vs クラウドバックアップ：エンジニアのデータをどう守るか"
+    priority: low
+    status: pending
+
+  # ─── オーディオ ───
+  - slug: sony-wh-1000xm6-review
+    collection: reviews
+    category: audio
+    topic: "Sony WH-1000XM6 を3ヶ月使ったレビュー。ノイキャンとマイク品質"
+    product: "Sony WH-1000XM6"
+    priority: normal
+    status: pending
+
+  - slug: shure-mv7-vs-yeti-x
+    collection: roundups
+    category: audio
+    topic: "Shure MV7 と Blue Yeti X：Web会議・ポッドキャスト用マイクを比較"
+    priority: normal
+    status: pending
+
+  - slug: noise-cancelling-headphones-best
+    collection: roundups
+    category: audio
+    topic: "エンジニア向けノイズキャンセリングヘッドホン おすすめ5選"
+    priority: normal
+    status: pending
+
+  # ─── 電源・ケーブル ───
+  - slug: ups-cyberpower-vs-apc
+    collection: roundups
+    category: power
+    topic: "CyberPower vs APC：自宅サーバー / NAS 用 UPS の選び方"
+    priority: low
+    status: pending
+
+  - slug: usb-c-cable-100w-best
+    collection: roundups
+    category: power
+    topic: "100W対応 USB-C ケーブル おすすめ5選。安全に充電できる選び方"
+    priority: normal
+    status: pending
+
+  - slug: anker-737-power-bank-review
+    collection: reviews
+    category: power
+    topic: "Anker Prime 27,650mAh モバイルバッテリー レビュー。ノートPCが充電できる重量はどこまで許せるか"
+    product: "Anker Prime 27,650mAh"
+    priority: normal
+    status: pending
+
+  # ─── ガイド・選び方（横断） ───
+  - slug: new-engineer-gear-2026
+    collection: guides
+    category: pc
+    topic: "新人エンジニア向け2026年版・最初の在宅装備一式（10万円・20万円・40万円コース）"
+    priority: high
+    status: pending
+
+  - slug: home-office-essential-7
+    collection: guides
+    category: desk
+    topic: "在宅エンジニアが買って後悔しなかった必需品 7選"
+    priority: normal
+    status: pending
+
+  # ─── ニュース（書く時の鮮度に依存、優先度低） ───
+  - slug: hhkb-studio-2-rumor
+    collection: news
+    category: keyboard
+    topic: "HHKB Studio 2 の噂を整理。期待されている改良点と発売時期予測"
+    priority: low
+    status: pending
+
+  - slug: m5-mac-mini-rumor
+    collection: news
+    category: pc
+    topic: "M5 Mac mini の噂を整理。チップ性能と発売時期"
+    priority: low
+    status: pending
+
+  - slug: oled-monitor-engineer-2026
+    collection: roundups
+    category: monitor
+    topic: "OLEDモニターはエンジニアに向くか。焼き付き・テキスト鮮明度・コスパで検証"
+    priority: low
+    status: pending
+
+  - slug: split-keyboard-best-2026
+    collection: roundups
+    category: keyboard
+    topic: "分割キーボード おすすめ5選。Moonlander / Glove80 / ZSA Voyager 比較"
+    priority: low
+    status: pending

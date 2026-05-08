@@ -1,0 +1,8 @@
+# 更新キュー
+# scripts/refresh-old.sh が src/content/ をスキャンし、
+# pubDate / updatedDate から age_threshold_days を超えたものを自動充填する。
+#
+# このファイルを手動で書き換える必要は通常ない。
+# 追加で更新したい場合だけエントリを足す。
+
+queue: []
