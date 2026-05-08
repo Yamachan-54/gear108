@@ -29,7 +29,8 @@ queue:
     category: pc
     topic: "新人エンジニア向け2026年版・最初の在宅装備一式（10万円・20万円・40万円コース）"
     priority: high
-    status: pending
+    status: done
+    completed_at: 2026-05-09
     notes: "W19-Mon: ピラー記事。サイト全体の内部リンクハブにする"
 
   - slug: dell-u2725qe-review
