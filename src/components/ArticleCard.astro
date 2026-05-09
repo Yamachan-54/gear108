@@ -1,0 +1,102 @@
+---
+import { CATEGORY_COLOR } from '../lib/category-theme';
+import type { Category } from '../content.config';
+
+type Variant = 'hero' | 'large' | 'medium' | 'small' | 'list';
+
+interface Props {
+  href: string;
+  slug: string;                  // OG画像参照に使う
+  title: string;
+  description?: string;
+  heroImage?: string;            // 実機写真があればこちら、無ければ /og/<slug>.png
+  pubDate?: Date;
+  category: Category;
+  categoryLabel: string;
+  badge?: string;                // "REVIEW" "COMPARE" 等の collection ラベル
+  variant?: Variant;
+}
+
+const {
+  href,
+  slug,
+  title,
+  description,
+  heroImage,
+  pubDate,
+  category,
+  categoryLabel,
+  badge,
+  variant = 'medium',
+} = Astro.props;
+
+const imgSrc = heroImage ?? `/og/${slug}.png`;
+const c = CATEGORY_COLOR[category];
+
+const fmt = (d: Date) =>
+  d.toLocaleDateString('ja-JP', { year: 'numeric', month: 'numeric', day: 'numeric' });
+
+// variant 別レイアウト：見せ方を切り替える
+const variantClass = {
+  hero:   'col-span-full md:col-span-2 row-span-2',
+  large:  'md:col-span-2',
+  medium: '',
+  small:  '',
+  list:   '',
+}[variant];
+
+const titleClass = {
+  hero:   'text-2xl md:text-3xl font-bold leading-tight',
+  large:  'text-xl md:text-2xl font-bold leading-tight',
+  medium: 'text-base font-bold leading-snug',
+  small:  'text-sm font-bold leading-snug',
+  list:   'text-base font-bold leading-snug',
+}[variant];
+---
+{variant === 'list' ? (
+  <a href={href} class="group flex gap-3 py-3 border-b border-neutral-200 last:border-0">
+    <div class="shrink-0 w-24 aspect-[16/9] bg-neutral-100 rounded overflow-hidden">
+      <img src={imgSrc} alt="" loading="lazy" class="w-full h-full object-cover" />
+    </div>
+    <div class="min-w-0 flex-1">
+      <div class="flex items-center gap-2 text-[10px] mb-0.5">
+        {badge && <span class="font-mono font-bold tracking-wider" style={`color:${c.hex}`}>{badge}</span>}
+        <span class="text-neutral-500">{categoryLabel}</span>
+      </div>
+      <h3 class={`${titleClass} text-neutral-900 group-hover:text-pink-600 transition-colors line-clamp-2`}>{title}</h3>
+    </div>
+  </a>
+) : (
+  <a href={href} class={`group block ${variantClass}`}>
+    <div class={`relative aspect-[16/9] overflow-hidden rounded bg-neutral-100 ${variant === 'hero' ? 'aspect-[16/9]' : ''}`}>
+      <img
+        src={imgSrc}
+        alt=""
+        loading={variant === 'hero' ? 'eager' : 'lazy'}
+        class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+      />
+      {/* カテゴリの色アクセント */}
+      <span
+        class="absolute top-3 left-3 text-[11px] font-mono font-bold tracking-wider px-2 py-0.5 rounded text-white"
+        style={`background-color:${c.hex}`}
+      >
+        {badge ? `${badge} · ${categoryLabel}` : categoryLabel}
+      </span>
+    </div>
+    <div class="mt-3">
+      <h3 class={`${titleClass} text-neutral-900 group-hover:text-pink-600 transition-colors`}>
+        {title}
+      </h3>
+      {variant !== 'small' && description && (
+        <p class={`mt-2 ${variant === 'hero' || variant === 'large' ? 'text-base text-neutral-700 line-clamp-3' : 'text-sm text-neutral-600 line-clamp-2'}`}>
+          {description}
+        </p>
+      )}
+      {pubDate && (
+        <time datetime={pubDate.toISOString()} class="mt-2 block text-xs text-neutral-500 font-mono">
+          {fmt(pubDate)}
+        </time>
+      )}
+    </div>
+  </a>
+)}

@@ -1,77 +1,185 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProductCard from '../components/ProductCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
 import { CATEGORY_LABELS, COLLECTION_LABELS } from '../content.config';
+import type { Category, CollectionName } from '../content.config';
+import { CATEGORY_COLOR } from '../lib/category-theme';
 
 type Item = {
-  collection: keyof typeof COLLECTION_LABELS;
+  collection: CollectionName;
   slug: string;
   data: any;
 };
 
-async function fetchAll(): Promise<Item[]> {
-  const types = Object.keys(COLLECTION_LABELS) as Item['collection'][];
-  const buckets = await Promise.all(
-    types.map((c) => getCollection(c, ({ data }) => !data.draft)),
-  );
-  return buckets.flatMap((entries, i) =>
-    entries.map((e) => ({
-      collection: types[i]!,
-      slug: e.id,
-      data: e.data,
-    })),
-  );
-}
-
-const all = (await fetchAll()).sort(
-  (a, b) => +new Date(b.data.pubDate) - +new Date(a.data.pubDate),
+const collTypes = Object.keys(COLLECTION_LABELS) as CollectionName[];
+const buckets = await Promise.all(
+  collTypes.map((c) => getCollection(c, ({ data }) => !data.draft)),
 );
+const all: Item[] = buckets.flatMap((entries, i) =>
+  entries.map((e) => ({
+    collection: collTypes[i]!,
+    slug: e.id,
+    data: e.data,
+  })),
+);
+all.sort((a, b) => +new Date(b.data.pubDate) - +new Date(a.data.pubDate));
 
-const latest = all.slice(0, 12);
-const categoryEntries = Object.entries(CATEGORY_LABELS) as [string, string][];
+// ヒーロー（最新1本）+ 残りを多列グリッドへ
+const [hero, ...rest] = all;
+const featured = rest.slice(0, 4);
+const remaining = rest.slice(4);
+
+// カテゴリ別グルーピング
+const byCategory = new Map<Category, Item[]>();
+for (const it of all) {
+  const cat = it.data.category as Category;
+  if (!byCategory.has(cat)) byCategory.set(cat, []);
+  byCategory.get(cat)!.push(it);
+}
+const categoryEntries = Object.entries(CATEGORY_LABELS) as [Category, string][];
+
+// ランキング = 直近の reviews を rating で並べ替え（とりあえずの簡易ロジック）
+const ranking = all
+  .filter((i) => i.collection === 'reviews' && typeof i.data.rating === 'number')
+  .sort((a, b) => (b.data.rating ?? 0) - (a.data.rating ?? 0))
+  .slice(0, 5);
 ---
 <BaseLayout
   title="エンジニア向け最新ガジェット"
-  description="エンジニア向けの最新ガジェット・周辺機器のレビュー・比較・ニュース・選び方ガイドを届けます。"
+  description="エンジニア向け最新ガジェットのレビュー・比較・ニュース・選び方ガイドを毎日届けます。"
 >
-  <section class="mb-10">
-    <h1 class="sr-only">gear108</h1>
-    <p class="text-neutral-700 leading-relaxed">
-      キーボード、モニター、PC、デスク——働く道具を一つずつ検証します。
-      レビュー・比較・選び方を中心に、エンジニアの机の上で本当に使えるガジェットを紹介します。
-    </p>
-  </section>
+  {/* ヒーロー + ランキング */}
+  {hero && (
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+      <div class="lg:col-span-2">
+        <ArticleCard
+          href={`/${hero.collection}/${hero.slug}/`}
+          slug={hero.slug}
+          title={hero.data.title}
+          description={hero.data.description}
+          heroImage={hero.data.heroImage}
+          pubDate={new Date(hero.data.pubDate)}
+          category={hero.data.category}
+          categoryLabel={CATEGORY_LABELS[hero.data.category as Category]}
+          badge={COLLECTION_LABELS[hero.collection]}
+          variant="hero"
+        />
+      </div>
 
-  <section class="mb-10">
-    <h2 class="text-base font-bold text-neutral-900 mb-3">カテゴリ</h2>
-    <ul class="flex flex-wrap gap-x-4 gap-y-2 text-sm">
-      {categoryEntries.map(([slug, label]) => (
-        <li>
-          <a href={`/categories/${slug}/`} class="text-neutral-700 hover:underline">{label}</a>
-        </li>
-      ))}
-    </ul>
-  </section>
+      {/* サイドの ranking */}
+      <aside class="lg:col-span-1 border-t lg:border-t-0 lg:border-l border-neutral-200 lg:pl-6 pt-6 lg:pt-0">
+        <h2 class="text-xs font-mono font-bold tracking-widest mb-3 flex items-center gap-2">
+          <span class="inline-block w-2 h-2 bg-pink-500 rounded-full"></span>
+          RANKING / TOP RATED
+        </h2>
+        {ranking.length === 0 ? (
+          <p class="text-sm text-neutral-500">まだランキングが作れる量じゃない。</p>
+        ) : (
+          <ol class="space-y-3">
+            {ranking.map((item, i) => (
+              <li class="flex gap-3 items-start">
+                <span class="font-mono font-black text-2xl text-neutral-300 leading-none w-6 shrink-0">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <a href={`/${item.collection}/${item.slug}/`} class="group min-w-0 flex-1">
+                  <div class="flex items-center gap-2 text-[10px] mb-0.5">
+                    <span class="font-mono font-bold tracking-wider" style={`color:${CATEGORY_COLOR[item.data.category as Category].hex}`}>
+                      {COLLECTION_LABELS[item.collection]}
+                    </span>
+                    <span class="text-neutral-500">★ {item.data.rating.toFixed(1)}</span>
+                  </div>
+                  <h3 class="text-sm font-bold leading-snug text-neutral-900 group-hover:text-pink-600 line-clamp-2">
+                    {item.data.title}
+                  </h3>
+                </a>
+              </li>
+            ))}
+          </ol>
+        )}
+      </aside>
+    </section>
+  )}
 
-  <section>
-    <h2 class="text-base font-bold text-neutral-900 mb-4">最新の記事</h2>
-    {latest.length === 0 ? (
-      <p class="text-neutral-500 text-sm">まだ記事がありません。</p>
-    ) : (
-      <div class="space-y-6">
-        {latest.map((item) => (
-          <ProductCard
+  {/* 注目の記事 */}
+  {featured.length > 0 && (
+    <section class="mb-12">
+      <h2 class="text-xs font-mono font-bold tracking-widest mb-4 flex items-center gap-2">
+        <span class="inline-block w-2 h-2 bg-pink-500 rounded-full"></span>
+        FEATURED
+      </h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {featured.map((item) => (
+          <ArticleCard
             href={`/${item.collection}/${item.slug}/`}
+            slug={item.slug}
             title={item.data.title}
             description={item.data.description}
-            image={item.data.heroImage}
+            heroImage={item.data.heroImage}
             pubDate={new Date(item.data.pubDate)}
-            category={CATEGORY_LABELS[item.data.category as keyof typeof CATEGORY_LABELS]}
+            category={item.data.category}
+            categoryLabel={CATEGORY_LABELS[item.data.category as Category]}
             badge={COLLECTION_LABELS[item.collection]}
+            variant="medium"
           />
         ))}
       </div>
-    )}
+    </section>
+  )}
+
+  {/* カテゴリ別セクション */}
+  <section class="mb-12">
+    <h2 class="text-xs font-mono font-bold tracking-widest mb-4 flex items-center gap-2">
+      <span class="inline-block w-2 h-2 bg-pink-500 rounded-full"></span>
+      CATEGORIES
+    </h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+      {categoryEntries.map(([slug, label]) => {
+        const c = CATEGORY_COLOR[slug];
+        const count = byCategory.get(slug)?.length ?? 0;
+        return (
+          <a
+            href={`/categories/${slug}/`}
+            class="group border-l-4 px-3 py-3 bg-neutral-50 hover:bg-white transition-colors"
+            style={`border-color:${c.hex}`}
+          >
+            <div class="text-[10px] font-mono font-bold tracking-wider" style={`color:${c.hex}`}>
+              {slug.toUpperCase()}
+            </div>
+            <div class="text-sm font-bold text-neutral-900 group-hover:text-pink-600 mt-0.5">
+              {label}
+            </div>
+            <div class="text-[10px] text-neutral-500 mt-0.5 font-mono">
+              {count} 記事
+            </div>
+          </a>
+        );
+      })}
+    </div>
   </section>
+
+  {/* それ以下の記事を縦リスト */}
+  {remaining.length > 0 && (
+    <section class="mb-12">
+      <h2 class="text-xs font-mono font-bold tracking-widest mb-4 flex items-center gap-2">
+        <span class="inline-block w-2 h-2 bg-pink-500 rounded-full"></span>
+        MORE
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6">
+        {remaining.map((item) => (
+          <ArticleCard
+            href={`/${item.collection}/${item.slug}/`}
+            slug={item.slug}
+            title={item.data.title}
+            heroImage={item.data.heroImage}
+            pubDate={new Date(item.data.pubDate)}
+            category={item.data.category}
+            categoryLabel={CATEGORY_LABELS[item.data.category as Category]}
+            badge={COLLECTION_LABELS[item.collection]}
+            variant="list"
+          />
+        ))}
+      </div>
+    </section>
+  )}
 </BaseLayout>
