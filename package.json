@@ -5,11 +5,14 @@
   "private": true,
   "description": "エンジニア向け最新ガジェットのレビュー・比較・ニュースを毎日届ける情報サイト",
   "scripts": {
+    "predev": "node scripts/gen-og-images.mjs",
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/gen-og-images.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "og": "node scripts/gen-og-images.mjs",
     "astro": "astro"
   },
   "dependencies": {
@@ -22,6 +25,9 @@
     "typescript": "^5.6.0"
   },
   "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "gray-matter": "^4.0.3",
+    "rehype-mermaid": "^3.0.0",
     "wrangler": "^4.90.0"
   }
 }

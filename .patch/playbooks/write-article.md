@@ -42,9 +42,30 @@
 
 ### 4. 執筆
 
-`.patch/playbooks/article-template.md` を参照（ない場合は `docs/CONTENT-WORKFLOW.md` の「記事タイプ別テンプレ」に従う）。
+`docs/CONTENT-WORKFLOW.md` の「記事タイプ別テンプレ」に従う。
 
-フロントマター必須項目：
+#### ファイル形式
+
+**新規記事は原則 `.mdx` で書く**（拡張子 `.mdx`）。
+`.md` でも書けるが、視覚コンポーネントを使えなくなるので避ける。
+
+ファイル冒頭の import 例：
+
+```mdx
+---
+title: "..."
+...frontmatter
+---
+import Highlight from '../../components/Highlight.astro';
+import ComparisonGrid from '../../components/ComparisonGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import ScoreBar from '../../components/ScoreBar.astro';
+```
+
+必要なコンポーネントだけ import する。
+
+#### フロントマター必須項目
+
 - title（32文字以内推奨）
 - description（120文字前後）
 - pubDate（今日）
@@ -53,6 +74,19 @@
 - collection 固有のフィールド（reviews なら productName/rating/pros/cons など）
 - affiliateLinks（**プレースホルダ URL を入れる、後で人間が差し替える前提**）
 - draft（config.yml の draft_first が true なら `draft: true`）
+- **heroImage は設定しない**（`/og/<slug>.png` が prebuild で自動生成され、layout が拾う）
+
+#### 視覚コンポーネントの使い分け（最低 1 つは使う）
+
+| 状況 | コンポーネント | 例 |
+|------|--------------|-----|
+| 結論を冒頭で目立たせる | `<Highlight variant="tip" title="結論を先に">` | 必ず1つ。記事の TL;DR |
+| 注意点・地雷を強調 | `<Highlight variant="warn" title="..."> ` | 「悪い知らせ」セクションの中で |
+| 製品同士の比較 | `<ComparisonGrid axes={...} products={...} />` | roundups / 比較系で必須 |
+| 評価を見せる | `<ScoreBar label="..." score={4.5} />` | レビューで複数軸の採点を出すとき |
+| 重要な一文を抜き出す | `<PullQuote attribution="Patch — gear108">` | 記事中盤、検索ヒット狙いの一行 |
+
+「文字だけが延々と続く」記事は禁止。**最低でもコールアウト1つ + 比較表 or プルクオート1つ**を使う。読み手は人間だ。流し読みで結論まで届かないと、読まれずに閉じられる。
 
 ### 5. 自己レビュー（git diff してから commit）
 
@@ -64,7 +98,8 @@
 - [ ] 800 単語以上ある
 - [ ] forbid_phrases（「簡単です」「100%」「誰でもすぐに」）が含まれていない
 - [ ] 内部リンクが2つ以上ある（同カテゴリの既存記事へ）
-- [ ] heroImage は **未設定**（実機写真が無いので参照させない）
+- [ ] heroImage は **未設定**（OG画像は `/og/<slug>.png` が自動生成される）
+- [ ] 視覚コンポーネントが最低 1 つ使われている（Highlight / ComparisonGrid / PullQuote / ScoreBar のいずれか）
 
 落ちている項目があれば修正してから次へ。
 

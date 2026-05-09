@@ -20,6 +20,7 @@ const isExpired = d.saleEndsAt ? d.saleEndsAt.getTime() < Date.now() : false;
   pubDate={d.pubDate}
   updatedDate={d.updatedDate}
   heroImage={d.heroImage}
+  slug={entry.id}
   category={d.category}
   tags={d.tags}
   collection="deals"

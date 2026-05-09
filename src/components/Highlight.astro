@@ -1,0 +1,28 @@
+---
+// 記事中で特に強調したい結論や注意点を、囲みで目立たせるコールアウト。
+type Variant = 'note' | 'warn' | 'tip';
+
+interface Props {
+  variant?: Variant;
+  title?: string;
+}
+
+const { variant = 'note', title } = Astro.props;
+
+const VARIANT: Record<Variant, { border: string; bg: string; tag: string; tagBg: string; label: string }> = {
+  note: { border: 'border-neutral-300', bg: 'bg-neutral-50', tag: 'text-neutral-700', tagBg: 'bg-neutral-200', label: 'NOTE' },
+  warn: { border: 'border-amber-400', bg: 'bg-amber-50', tag: 'text-amber-900', tagBg: 'bg-amber-200', label: '注意' },
+  tip:  { border: 'border-emerald-400', bg: 'bg-emerald-50', tag: 'text-emerald-900', tagBg: 'bg-emerald-200', label: 'TIP' },
+};
+
+const v = VARIANT[variant];
+---
+<aside class={`my-6 border-l-4 ${v.border} ${v.bg} px-4 py-3 rounded-r`}>
+  <div class={`inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider ${v.tag}`}>
+    <span class={`px-1.5 py-0.5 rounded ${v.tagBg}`}>{v.label}</span>
+    {title && <span class="text-neutral-700 font-sans tracking-normal">{title}</span>}
+  </div>
+  <div class="mt-2 text-sm text-neutral-800 leading-relaxed">
+    <slot />
+  </div>
+</aside>
