@@ -22,8 +22,6 @@ queue:
     status: done
     completed_at: 2026-05-09
 
-  # ─── 2026-W19 picks（週次レビューで Patch が選定。Mon→Fri の順）───
-  # 並びの根拠は .patch/reports/weekly-2026-W19.md を参照。
   - slug: new-engineer-gear-2026
     collection: guides
     category: pc
@@ -33,6 +31,9 @@ queue:
     completed_at: 2026-05-09
     notes: "W19-Mon: ピラー記事。サイト全体の内部リンクハブにする"
 
+  # ─── 2026-W20 picks（週次レビューで Patch が選定。Mon→Fri の順）───
+  # 並びの根拠は .patch/reports/weekly-2026-W19.md の「来週の方針」を参照。
+  # 2026-W19 の繰越4本 + cherry-mx を金曜枠に昇格して計5本。
   - slug: dell-u2725qe-review
     collection: reviews
     category: monitor
@@ -40,7 +41,7 @@ queue:
     product: "Dell U2725QE"
     priority: high
     status: pending
-    notes: "W19-Tue: 既存 seed に monitor 無し。USB-C 90W+KVM で検索意図明確"
+    notes: "W20-Mon (2026-05-11): 既存 seed に monitor 無し。USB-C 90W+KVM で検索意図明確"
 
   - slug: 4k-27-inch-best-2026
     collection: roundups
@@ -48,7 +49,7 @@ queue:
     topic: "2026年版・エンジニア向け4K 27インチモニター おすすめ7選"
     priority: high
     status: pending
-    notes: "W19-Wed: 火曜 review と内部リンクで束ねる。検索量高"
+    notes: "W20-Tue (2026-05-12): 月曜 review と内部リンクで束ねる。検索量高"
 
   - slug: aeron-vs-okamura-contessa
     collection: roundups
@@ -56,7 +57,7 @@ queue:
     topic: "アーロンチェア リマスタード vs オカムラ コンテッサ セコンダ：エンジニアの腰を救うのは"
     priority: high
     status: pending
-    notes: "W19-Thu: flexispot seed と隣接。客単価高"
+    notes: "W20-Wed (2026-05-13): flexispot seed と隣接。客単価高"
 
   - slug: m4-macbook-air-vs-mac-mini
     collection: roundups
@@ -64,7 +65,15 @@ queue:
     topic: "M4 MacBook Air と M4 Mac mini、開発機にするならどちらか"
     priority: high
     status: pending
-    notes: "W19-Fri: m4-mac-mini-dev-machine seed と軸違い（形態の選び方）で補完"
+    notes: "W20-Thu (2026-05-14): m4-mac-mini-dev-machine seed と軸違い（形態の選び方）で補完"
+
+  - slug: cherry-mx-axis-comparison-2026
+    collection: guides
+    category: keyboard
+    topic: "Cherry MX 軸別の選び方ガイド：赤・青・茶・黒・銀軸 5種をエンジニア用途で比較"
+    priority: high
+    status: pending
+    notes: "W20-Fri (2026-05-15): realforce / hhkb-studio との内部リンクハブ。W20 で keyboard 厚み追加"
 
   # ─── キーボード ───
   - slug: keychron-q1-pro-review
@@ -72,13 +81,6 @@ queue:
     category: keyboard
     topic: "Keychron Q1 Pro の長期使用レビュー。カスタムキーボード入門としての評価"
     product: "Keychron Q1 Pro"
-    priority: normal
-    status: pending
-
-  - slug: cherry-mx-axis-comparison-2026
-    collection: guides
-    category: keyboard
-    topic: "Cherry MX 軸別の選び方ガイド：赤・青・茶・黒・銀軸 5種をエンジニア用途で比較"
     priority: normal
     status: pending
 
