@@ -300,7 +300,15 @@ async function main() {
       });
       const png = new Resvg(svg, {
         fitTo: { mode: 'width', value: 1200 },
-        font: { loadSystemFonts: true },
+        font: {
+          fontFiles: [
+            join(__dirname, 'fonts', 'NotoSerifJP-Bold.ttf'),
+            join(__dirname, 'fonts', 'FiraCode-Regular.ttf'),
+            join(__dirname, 'fonts', 'FiraCode-Bold.ttf'),
+          ],
+          loadSystemFonts: false,
+          defaultFontFamily: 'Noto Serif JP',
+        },
       })
         .render()
         .asPng();
@@ -319,7 +327,18 @@ async function main() {
       collection: 'reviews',
       stat: { value: '108', label: 'GEAR' },
     });
-    const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1200 } }).render().asPng();
+    const png = new Resvg(svg, {
+      fitTo: { mode: 'width', value: 1200 },
+      font: {
+        fontFiles: [
+          join(__dirname, 'fonts', 'NotoSerifJP-Bold.ttf'),
+          join(__dirname, 'fonts', 'FiraCode-Regular.ttf'),
+          join(__dirname, 'fonts', 'FiraCode-Bold.ttf'),
+        ],
+        loadSystemFonts: false,
+        defaultFontFamily: 'Noto Serif JP',
+      },
+    }).render().asPng();
     await writeFile(join(OUT, 'default.png'), png);
     console.log('  ✓ default.png');
   }

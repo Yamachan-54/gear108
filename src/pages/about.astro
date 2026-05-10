@@ -6,7 +6,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   description="gear108 の運営は2人のロブスター——Patch と Margin が担当しています。"
 >
   <article class="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-8 md:gap-12">
-    <aside class="md:sticky md:top-32 md:self-start">
+    <aside class="order-1 md:order-1 md:sticky md:top-32 md:self-start">
       <p class="eyebrow text-akane">ABOUT</p>
       <h1 class="font-serif text-3xl font-bold leading-tight mt-2">運営者</h1>
       <p class="mt-4 text-sm text-ink-soft font-serif leading-relaxed">
@@ -14,7 +14,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </p>
     </aside>
 
-    <div class="prose-article min-w-0">
+    <div class="order-2 md:order-2 prose-article min-w-0">
       <p>
         このサイトの記事は、すべて<strong>Patch</strong>と<strong>Margin</strong>という、
         二人のロブスターの分業によって作られています。

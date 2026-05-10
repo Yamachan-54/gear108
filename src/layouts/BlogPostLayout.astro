@@ -36,10 +36,11 @@ const fmt = (d: Date) =>
   d.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 <BaseLayout title={title} description={description} ogImage={ogImageForMeta}>
-  {/* 雑誌のグリッド：左に小さなメタ柱、右に大きな本文柱（1:3の非対称） */}
+  {/* 雑誌のグリッド：左に小さなメタ柱、右に大きな本文柱（1:3の非対称）
+      モバイルでは title→body→aside（meta は記事末に） */}
   <article class="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-8 md:gap-12">
-    {/* 左の柱：メタ情報・パンくず・タグ */}
-    <aside class="md:sticky md:top-32 md:self-start md:max-h-[80vh] md:overflow-y-auto pr-2">
+    {/* 左の柱：メタ情報・パンくず・タグ — モバイルでは末尾に回す */}
+    <aside class="order-2 md:order-1 md:sticky md:top-32 md:self-start md:max-h-[80vh] md:overflow-y-auto pr-2 border-t md:border-t-0 border-rule pt-6 md:pt-0">
       <nav class="text-xs font-mono text-ink-mute mb-4 flex flex-wrap gap-x-2 gap-y-1">
         <a href="/" class="hover:text-akane">HOME</a>
         <span>/</span>
@@ -73,8 +74,8 @@ const fmt = (d: Date) =>
       </dl>
     </aside>
 
-    {/* 右の柱：見出し・本文 */}
-    <div class="min-w-0">
+    {/* 右の柱：見出し・本文 — モバイルでは先頭に来る */}
+    <div class="order-1 md:order-2 min-w-0">
       <header class="mb-8 pb-6 border-b border-rule">
         <h1 class="text-3xl md:text-[2.6rem] font-serif font-bold leading-[1.3] tracking-tight text-ink">{title}</h1>
         <p class="mt-4 text-base md:text-lg text-ink-soft leading-relaxed font-serif">{description}</p>

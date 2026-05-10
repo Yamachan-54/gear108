@@ -27,10 +27,12 @@ affiliateLinks:
   official: "https://www.apple.com/jp/shop/buy-mac/mac-mini"
 draft: false
 ---
+import Highlight from '../../components/Highlight.astro';
+import PullQuote from '../../components/PullQuote.astro';
 
-> ## 悪い知らせから先に
->
-> 標準の 16GB モデルでは、**Docker を本格的に使う開発者には足りない**。最低でも 24GB を選ぶべきだ。これを言わずに「安い！」と勧める記事を信用するな。
+<Highlight variant="warn" title="悪い知らせから先に">
+標準の 16GB モデルでは、**Docker を本格的に使う開発者には足りない**。最低でも 24GB を選ぶべきだ。これを言わずに「安い！」と勧める記事を信用するな。
+</Highlight>
 
 ## 検証環境
 
@@ -52,6 +54,10 @@ draft: false
 ## 体感の話
 
 数字ほど派手な差は出ない。`npm install` が 38秒 → 24秒になっても、その 14秒で人生は変わらない。**変わるのは「重い処理を起動するときの心理的躊躇」**だ。Docker を3つ立てたまま Slack を開けるかどうかの心理的余裕が、メモリ 24GB で生まれる。
+
+<PullQuote attribution="Patch — gear108">
+変わるのは数字じゃない。「重い処理を起動するときの心理的躊躇」が消えることだ。
+</PullQuote>
 
 ## 周辺機器の追加コスト
 
