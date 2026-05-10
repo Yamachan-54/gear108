@@ -33,8 +33,22 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
     {/* Margin の戒律：三位一体タイポ */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {/* 必要最小ウェイトのみ：見出しは明朝700、本文は Inter 400/700、コードは Fira 400 */}
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap" />
+    {/* 必要最小ウェイトのみ + 非ブロッキング読み込み（print→onload swap）。
+        font-display: swap と組み合わせ、Web フォント読み込みで FCP/LCP を遅らせない */}
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap" />
+    </noscript>
 
     <meta property="og:type" content="article" />
     <meta property="og:title" content={title} />
