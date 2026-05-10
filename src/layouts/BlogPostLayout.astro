@@ -30,12 +30,13 @@ const {
 
 const autoOg = `/og/${slug}.png`;
 const heroSrc = heroImage ?? autoOg;
+const heroWebp = heroImage ? null : `/og/${slug}.webp`;  // 自動生成OGのWebP版（軽量配信）
 const ogImageForMeta = heroImage ?? autoOg;
 
 const fmt = (d: Date) =>
   d.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
-<BaseLayout title={title} description={description} ogImage={ogImageForMeta} preloadHeroImage={heroSrc}>
+<BaseLayout title={title} description={description} ogImage={ogImageForMeta} preloadHeroImage={heroWebp ?? heroSrc}>
   {/* 雑誌のグリッド：左に小さなメタ柱、右に大きな本文柱（1:3の非対称）
       モバイルでは title→body→aside（meta は記事末に） */}
   <article class="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-8 md:gap-12">
@@ -81,16 +82,19 @@ const fmt = (d: Date) =>
         <p class="mt-4 text-base md:text-lg text-ink-soft leading-relaxed font-serif">{description}</p>
       </header>
 
-      <img
-        src={heroSrc}
-        alt=""
-        class="w-full aspect-[1200/630] object-cover mb-10 border border-rule"
-        loading="eager"
-        fetchpriority="high"
-        decoding="sync"
-        width="1200"
-        height="630"
-      />
+      <picture>
+        {heroWebp && <source srcset={heroWebp} type="image/webp" />}
+        <img
+          src={heroSrc}
+          alt=""
+          class="w-full aspect-[1200/630] object-cover mb-10 border border-rule"
+          loading="eager"
+          fetchpriority="high"
+          decoding="sync"
+          width="1200"
+          height="630"
+        />
+      </picture>
 
       <div class="prose-article">
         <slot />

@@ -34,7 +34,13 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
 
     {/* Margin の戒律：三位一体タイポ */}
     {preloadHeroImage && (
-      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
+      <link
+        rel="preload"
+        as="image"
+        href={preloadHeroImage}
+        type={preloadHeroImage.endsWith('.webp') ? 'image/webp' : undefined}
+        fetchpriority="high"
+      />
     )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

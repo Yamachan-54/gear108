@@ -8,6 +8,7 @@ import { existsSync } from 'node:fs';
 import { join, basename, extname, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Resvg } from '@resvg/resvg-js';
+import sharp from 'sharp';
 import matter from 'gray-matter';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -314,8 +315,11 @@ async function main() {
         .asPng();
       const outPath = join(OUT, `${slug}.png`);
       await writeFile(outPath, png);
+      // 配信用：WebP（70-80% 削減、ブラウザは <picture> で WebP を優先）
+      const webp = await sharp(png).webp({ quality: 80 }).toBuffer();
+      await writeFile(join(OUT, `${slug}.webp`), webp);
       generated++;
-      console.log(`  ✓ ${collection}/${slug}.png`);
+      console.log(`  ✓ ${collection}/${slug}.png + .webp (${(png.length/1024).toFixed(0)}KB → ${(webp.length/1024).toFixed(0)}KB)`);
     }
   }
 
@@ -340,7 +344,9 @@ async function main() {
       },
     }).render().asPng();
     await writeFile(join(OUT, 'default.png'), png);
-    console.log('  ✓ default.png');
+    const webp = await sharp(png).webp({ quality: 80 }).toBuffer();
+    await writeFile(join(OUT, 'default.webp'), webp);
+    console.log('  ✓ default.png + .webp');
   }
 
   console.log(`\nOG image generation: ${generated} generated, ${skipped} skipped (drafts), ${total} scanned.`);
