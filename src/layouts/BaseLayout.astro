@@ -33,7 +33,8 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
     {/* Margin の戒律：三位一体タイポ */}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@400;500;700&family=Fira+Code:wght@400;500;700&display=swap" />
+    {/* 必要最小ウェイトのみ：見出しは明朝700、本文は Inter 400/700、コードは Fira 400 */}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap" />
 
     <meta property="og:type" content="article" />
     <meta property="og:title" content={title} />
@@ -57,9 +58,9 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
           </a>
           <nav class="flex flex-wrap items-baseline gap-x-4 md:gap-x-6 gap-y-1 text-xs md:text-sm w-full md:w-auto md:order-none">
             {collectionNav.map(([slug, label]) => (
-              <a href={`/${slug}/`} class="text-ink-soft hover:text-akane transition-colors">{label}</a>
+              <a href={`/${slug}/`} class="text-ink-soft hover:text-akane transition-colors py-2 md:py-0 inline-block min-h-[44px] md:min-h-0 leading-tight">{label}</a>
             ))}
-            <a href="/about/" class="text-ink-soft hover:text-akane transition-colors">運営</a>
+            <a href="/about/" class="text-ink-soft hover:text-akane transition-colors py-2 md:py-0 inline-block min-h-[44px] md:min-h-0 leading-tight">運営</a>
           </nav>
         </div>
       </div>
@@ -70,9 +71,9 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
           {categoryNav.map(([slug, label]) => (
             <a
               href={`/categories/${slug}/`}
-              class="font-mono text-[11px] font-bold tracking-wider uppercase px-2 py-1 text-ink-soft hover:text-akane transition-colors flex items-center gap-1.5"
+              class="font-mono text-[11px] font-bold tracking-wider uppercase px-3 py-2.5 text-ink-soft hover:text-akane transition-colors flex items-center gap-1.5 min-h-[44px]"
             >
-              <span class="text-ink-mute">{label}</span>
+              <span class="text-ink-soft">{label}</span>
             </a>
           ))}
         </div>
