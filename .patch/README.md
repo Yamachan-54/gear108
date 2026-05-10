@@ -21,7 +21,8 @@
 │   ├── verification-loop.md # 検証ハンドオフ（Sieve）
 │   ├── design-review.md     # デザインレビュー（Margin）
 │   ├── prioritize-queue.md  # 週次キュー点検（Rudder）
-│   └── validate-demand.md   # 記事の市場検証（Beacon）
+│   ├── validate-demand.md   # 記事の市場検証（Beacon）
+│   └── release.md           # feature→dev→main の正規ルート
 ├── scripts/
 │   ├── write-next.sh        # cron から叩く記事生成
 │   ├── refresh-old.sh       # cron から叩く更新処理
