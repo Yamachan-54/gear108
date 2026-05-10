@@ -75,14 +75,26 @@
 - 合計: <yen>
 ```
 
-### 5. コミット
+### 5. Rudder へのハンドオフ（必須）
+
+来週の picks ブロックを並べ替えたら、**そのまま Rudder の `prioritize-queue` を呼ぶ**：
+
+- 入力: 並べ替え直後の `articles.yml` + 当週レポート
+- 期待される出力:
+  - 並行 2 本ルール / 週 3-5 本ルール の照合
+  - 「来週やらないこと 3 つ」の宣言
+  - 3 週超 pending の凍結判断
+
+Rudder の OK が出るまで commit しない。詳細：`.patch/playbooks/prioritize-queue.md`
+
+### 6. コミット
 
 ```bash
 git add .patch/reports/weekly-* .patch/queue/articles.yml
-git commit -m "chore(patch): 週次レビュー <YYYY-WW>"
+git commit -m "chore(patch): 週次レビュー <YYYY-WW> + Rudder 点検"
 git push origin main
 ```
 
-### 6. 異常時の通知
+### 7. 異常時の通知
 
 達成率が 50% を下回るか、ビルド失敗が3件を超えていたら、`config.yml` の通知先に警告を送る。

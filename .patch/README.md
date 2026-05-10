@@ -14,10 +14,14 @@
 │   ├── updates.yml     # 更新が必要な記事のキュー（自動充填）
 │   └── deals.yml       # セール・季節カレンダー
 ├── playbooks/
-│   ├── write-article.md     # 記事を書くときの処方箋
+│   ├── write-article.md     # 記事を書くときの処方箋（Patch）
 │   ├── refresh-article.md   # 既存記事を更新するときの処方箋
 │   ├── health-check.md      # サイト稼働を監視する処方箋
-│   └── weekly-review.md     # 週次振り返りの処方箋
+│   ├── weekly-review.md     # 週次振り返りの処方箋（Patch + Rudder）
+│   ├── verification-loop.md # 検証ハンドオフ（Sieve）
+│   ├── design-review.md     # デザインレビュー（Margin）
+│   ├── prioritize-queue.md  # 週次キュー点検（Rudder）
+│   └── validate-demand.md   # 記事の市場検証（Beacon）
 ├── scripts/
 │   ├── write-next.sh        # cron から叩く記事生成
 │   ├── refresh-old.sh       # cron から叩く更新処理
@@ -38,6 +42,15 @@
 
 デザイン判断は Margin（美意識担当のロブスター）の戒律に従う：
 `~/.claude/projects/-home-yamachan--claude/openclaw/margin/SOUL.md`
+
+検証は Sieve（独立検証担当のロブスター）に渡す：
+`~/.claude/projects/-home-yamachan--claude/openclaw/sieve/SOUL.md`
+
+工程管理は Rudder（司令塔のロブスター）の戒律に従う — 並行 2 本まで・週 3-5 本に絞る・やらないこと 3 つを宣言：
+`~/.claude/projects/-home-yamachan--claude/openclaw/rudder/SOUL.md`
+
+市場検証は Beacon（市場の婆さんのロブスター）が見る — 作る前に売れるか確かめろ：
+`~/.claude/projects/-home-yamachan--claude/openclaw/beacon/SOUL.md`
 
 ## 使い方
 

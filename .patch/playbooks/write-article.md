@@ -35,6 +35,19 @@
 - 取得直後、該当エントリの status を `in_progress` に更新（YAML を書き戻し）
 - 取得できなければレポートに「キュー枯渇」を記録して終了
 
+### 2.5. Beacon ゲート（市場検証 — 必須）
+
+`status: in_progress` に上げた直後、**書き始める前に** Beacon の `validate-demand` を呼ぶ：
+
+- 入力: 当該 slug / topic / product / category
+- Beacon が **Go** を返すまで Step 3 に進まない
+- 判定が **No-Go** → `status: skipped` + `skipped_reason` を記録、本日の記事は次の pending を再選定（または deals フォールバック）
+- 判定が **修正** → topic を書き直して再キュー、本日は別の pending に移る
+
+詳細：`.patch/playbooks/validate-demand.md`
+
+「とりあえず書き始める」は Patch / Beacon の戒律違反。**作る前に売れるか確かめろ**。
+
 ### 3. リサーチ
 
 - 製品の最新情報を Web 検索（exa / context7）で確認
