@@ -7,12 +7,14 @@ interface Props {
   title: string;
   description?: string;
   ogImage?: string;
+  preloadHeroImage?: string;  // 記事ページで LCP となる画像を <link rel=preload> で前倒し
 }
 
 const {
   title,
   description = 'エンジニア向け最新ガジェットのレビュー・比較・ニュース・選び方ガイドを毎日届ける情報サイト',
   ogImage = '/og/default.png',
+  preloadHeroImage,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site);
@@ -31,6 +33,9 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
     <meta name="description" content={description} />
 
     {/* Margin の戒律：三位一体タイポ */}
+    {preloadHeroImage && (
+      <link rel="preload" as="image" href={preloadHeroImage} fetchpriority="high" />
+    )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     {/* 必要最小ウェイトのみ + 非ブロッキング読み込み（print→onload swap）。
