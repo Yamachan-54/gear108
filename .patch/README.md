@@ -22,7 +22,8 @@
 │   ├── design-review.md     # デザインレビュー（Margin）
 │   ├── prioritize-queue.md  # 週次キュー点検（Rudder）
 │   ├── validate-demand.md   # 記事の市場検証（Beacon）
-│   └── release.md           # feature→dev→main の正規ルート
+│   ├── release.md           # feature→dev→main の正規ルート
+│   └── ci-deploy-setup.md   # CI 自動デプロイの初期設定（1 回もの）
 ├── scripts/
 │   ├── write-next.sh        # cron から叩く記事生成
 │   ├── refresh-old.sh       # cron から叩く更新処理
