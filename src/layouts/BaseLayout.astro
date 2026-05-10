@@ -44,21 +44,17 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
     )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    {/* 必要最小ウェイトのみ + 非ブロッキング読み込み（print→onload swap）。
-        font-display: swap と組み合わせ、Web フォント読み込みで FCP/LCP を遅らせない */}
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap"
-    />
+    {/* 欧文（Inter / Fira Code）のみ Google Fonts から取る。
+        日本語明朝はシステムフォント（Yu Mincho / Hiragino Mincho ProN / Noto Serif CJK JP）に任せる。
+        Noto Serif JP を Web フォントで取ると 20+ の woff2 チャンクが必要で FCP を破壊するため。 */}
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700&family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Fira+Code:wght@400&display=swap" />
     </noscript>
 
     <meta property="og:type" content="article" />
