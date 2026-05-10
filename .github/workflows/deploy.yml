@@ -1,0 +1,41 @@
+name: deploy
+
+on:
+  push:
+    branches: [main, dev]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Astro build
+        run: npm run build
+
+      - name: Verify build artifacts
+        run: |
+          test -f dist/index.html
+          test -f dist/sitemap-index.xml
+          count=$(find dist -name '*.html' | wc -l)
+          echo "HTML pages: $count"
+          if [ "$count" -lt 5 ]; then
+            echo "::error::HTML count too low: $count"
+            exit 1
+          fi
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=gear108 --branch=${{ github.ref_name }} --commit-message=${{ github.sha }}
