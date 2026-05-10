@@ -140,5 +140,29 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
       src="https://static.cloudflareinsights.com/beacon.min.js"
       data-cf-beacon='{"token": "df41404d3c384cde947d26d1571248b8"}'
     ></script>
+
+    {/* アフィリエイトクリック計測：data-affiliate-store の付いた <a> をイベント委任で監視
+        navigator.sendBeacon でページ遷移直前にも確実に送る */}
+    <script is:inline>
+      document.addEventListener('click', (e) => {
+        const target = e.target;
+        const a = target instanceof Element ? target.closest('a[data-affiliate-store]') : null;
+        if (!a) return;
+        try {
+          const data = {
+            store: a.getAttribute('data-affiliate-store'),
+            url: a.getAttribute('data-affiliate-href') || a.getAttribute('href'),
+            slug: (location.pathname.split('/').filter(Boolean).pop()) || '',
+            page: location.pathname,
+          };
+          const body = new Blob([JSON.stringify(data)], { type: 'application/json' });
+          if (navigator.sendBeacon) {
+            navigator.sendBeacon('/api/click', body);
+          } else {
+            fetch('/api/click', { method: 'POST', body, keepalive: true });
+          }
+        } catch (_) { /* 計測失敗は黙って続行：ユーザーの遷移を妨げない */ }
+      }, { capture: true });
+    </script>
   </body>
 </html>

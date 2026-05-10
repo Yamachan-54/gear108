@@ -23,6 +23,8 @@ const meta = STORE_NAMES[store];
   href={href}
   rel="sponsored noopener"
   target="_blank"
+  data-affiliate-store={store}
+  data-affiliate-href={href}
   class="inline-flex items-center gap-2 px-4 py-2 border border-ink text-ink text-sm no-underline hover:bg-ink hover:text-paper transition-colors font-mono"
 >
   <span>{label ?? `${meta}`}</span>

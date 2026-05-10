@@ -1,0 +1,10 @@
+name = "gear108"
+compatibility_date = "2024-12-01"
+pages_build_output_dir = "dist"
+
+# Cloudflare Analytics Engine — アフィリエイトクリック計測用の時系列ストレージ
+# Pages Functions（functions/api/click.ts）から writeDataPoint で書く
+# 月1000万イベントまで無料枠
+[[analytics_engine_datasets]]
+binding = "AFFILIATE_CLICKS"
+dataset = "gear108_affiliate_clicks"
