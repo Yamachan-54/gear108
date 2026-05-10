@@ -1,29 +1,50 @@
 @import "tailwindcss";
 
+/*
+ * Margin の戒律に従う色とタイポ：
+ *   - 三位一体タイポ：明朝（見出し）/ ゴシック（本文）/ Fira Code（コード・数値）
+ *   - 墨と紙、加えて1色のみ：朱赤 #c1272d
+ *   - Tailwind 番号付きデフォルト色は本ファイル外で使わない
+ */
+
 :root {
-  --color-bg: #fdfdfd;
-  --color-fg: #222;
-  --color-muted: #666;
-  --color-border: #e5e5e5;
-  --color-link: #2563eb;
-  --color-link-hover: #1d4ed8;
+  /* 紙 (paper)：背景・余白 */
+  --paper:        #fdfdfd;
+  --paper-soft:   #f7f5f0;
+  --rule:         #e6e2d8;       /* 細罫線 */
+  --rule-strong:  #c8c2b3;
+
+  /* 墨 (ink)：文字 */
+  --ink:          #1a1a1a;
+  --ink-soft:     #4a4a4a;
+  --ink-mute:     #8a8a8a;
+
+  /* アクセント：朱赤（編集者の赤ペン由来） */
+  --akane:        #c1272d;       /* 朱赤 — 唯一のアクセント */
+  --akane-mute:   #b7282e3a;
+
+  /* タイポ */
+  --font-serif: 'Noto Serif JP', 'Yu Mincho', 'Hiragino Mincho ProN', 'YuMincho', 'MS PMincho', serif;
+  --font-sans:  'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Yu Gothic UI', sans-serif;
+  --font-mono:  'Fira Code', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
   --content-width: 720px;
 }
 
 html {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
-    "Yu Gothic UI", "Meiryo", system-ui, sans-serif;
-  background-color: var(--color-bg);
-  color: var(--color-fg);
+  font-family: var(--font-sans);
+  background-color: var(--paper);
+  color: var(--ink);
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
   font-size: 16px;
-  line-height: 1.7;
+  line-height: 1.75;
+  font-feature-settings: 'palt' 1; /* 日本語のプロポーショナル詰め */
 }
 
 a {
@@ -33,94 +54,176 @@ a {
 a:hover {
   text-decoration: underline;
   text-underline-offset: 0.15em;
+  text-decoration-color: var(--akane);
+  text-decoration-thickness: 1.5px;
 }
 
-/* article body links keep the classic blue underlined look */
-.prose-article a {
-  color: var(--color-link);
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-.prose-article a:hover {
-  color: var(--color-link-hover);
+/* タイポグラフィ：見出しは明朝 */
+h1, h2, h3, h4, h5, h6,
+.font-serif {
+  font-family: var(--font-serif);
+  font-feature-settings: 'palt' 1;
+  letter-spacing: -0.005em;
 }
 
-/* article body */
+/* コード・数値・日時・タグ：Fira Code */
+code, pre, kbd, samp,
+.font-mono,
+time {
+  font-family: var(--font-mono);
+  font-variant-ligatures: contextual;
+}
+
+/* ============= 記事本文 ============= */
 .prose-article {
-  line-height: 1.85;
+  line-height: 1.95;
   font-size: 1.0625rem;
 }
+
 .prose-article h2 {
-  margin-top: 2.5rem;
-  margin-bottom: 0.75rem;
-  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 0.85rem;
+  font-size: 1.65rem;
   font-weight: 700;
-  border-bottom: 1px solid var(--color-border);
-  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.01em;
 }
+
 .prose-article h3 {
-  margin-top: 1.75rem;
+  margin-top: 2rem;
   margin-bottom: 0.5rem;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 700;
 }
+
 .prose-article p {
-  margin-block: 1rem;
+  margin-block: 1.1rem;
 }
+
 .prose-article ul,
 .prose-article ol {
   margin-block: 1rem;
   padding-left: 1.5rem;
 }
+
 .prose-article li {
-  margin-block: 0.25rem;
+  margin-block: 0.3rem;
 }
+
 .prose-article a {
-  color: var(--color-link);
+  color: var(--akane);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: rgba(193, 39, 45, 0.4);
 }
+.prose-article a:hover {
+  text-decoration-color: var(--akane);
+}
+
 .prose-article code {
-  background: #f3f4f6;
-  padding: 0.1em 0.35em;
-  border-radius: 0.25rem;
-  font-size: 0.9em;
-  color: #be123c;
+  font-family: var(--font-mono);
+  background: var(--paper-soft);
+  padding: 0.1em 0.4em;
+  border-radius: 2px;
+  font-size: 0.92em;
+  color: var(--akane);
 }
+
 .prose-article pre {
-  background: #f5f5f5;
-  padding: 1rem;
-  border-radius: 0.5rem;
+  font-family: var(--font-mono);
+  background: var(--paper-soft);
+  padding: 1.1rem;
+  border-radius: 2px;
   overflow-x: auto;
-  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--akane);
+  font-size: 0.92em;
 }
+
 .prose-article pre code {
   background: transparent;
-  color: inherit;
+  color: var(--ink);
   padding: 0;
 }
+
 .prose-article blockquote {
-  border-left: 3px solid #d1d5db;
-  padding: 0.25rem 0 0.25rem 1rem;
-  color: var(--color-muted);
-  margin: 1.5rem 0;
+  border-left: 3px solid var(--akane);
+  padding: 0.4rem 0 0.4rem 1.2rem;
+  color: var(--ink-soft);
+  margin: 1.8rem 0;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.85;
 }
+
 .prose-article table {
   width: 100%;
   border-collapse: collapse;
-  margin-block: 1.5rem;
+  margin-block: 1.6rem;
   font-size: 0.95rem;
 }
+
 .prose-article th,
 .prose-article td {
-  border: 1px solid var(--color-border);
-  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--rule);
+  padding: 0.6rem 0.85rem;
   text-align: left;
+  vertical-align: top;
 }
+
 .prose-article th {
-  background: #f9fafb;
+  background: var(--paper-soft);
   font-weight: 600;
+  font-family: var(--font-sans);
 }
+
 .prose-article hr {
   border: none;
-  border-top: 1px solid var(--color-border);
-  margin: 2.5rem 0;
+  border-top: 1px solid var(--rule);
+  margin: 3rem 0;
+}
+
+.prose-article strong {
+  font-weight: 700;
+}
+
+/* ============= ユーティリティ ============= */
+.text-akane     { color: var(--akane); }
+.bg-akane       { background-color: var(--akane); }
+.border-akane   { border-color: var(--akane); }
+.text-ink       { color: var(--ink); }
+.text-ink-soft  { color: var(--ink-soft); }
+.text-ink-mute  { color: var(--ink-mute); }
+.bg-paper       { background-color: var(--paper); }
+.bg-paper-soft  { background-color: var(--paper-soft); }
+.border-rule    { border-color: var(--rule); }
+
+/* 雑誌風の小見出しラベル（カテゴリラベル等） */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--akane);
+}
+
+/* セクション見出し（左に細線が立つ） */
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  position: relative;
+  padding-left: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.35em;
+  bottom: 0.35em;
+  width: 3px;
+  background: var(--akane);
 }

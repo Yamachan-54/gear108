@@ -23,8 +23,8 @@ const meta = STORE_NAMES[store];
   href={href}
   rel="sponsored noopener"
   target="_blank"
-  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded border border-neutral-300 bg-white text-neutral-800 text-sm no-underline hover:bg-neutral-50 hover:border-neutral-400 transition-colors"
+  class="inline-flex items-center gap-2 px-4 py-2 border border-ink text-ink text-sm no-underline hover:bg-ink hover:text-paper transition-colors font-mono"
 >
-  <span>{label ?? `${meta}で見る`}</span>
-  <span aria-hidden="true" class="text-neutral-400">↗</span>
+  <span>{label ?? `${meta}`}</span>
+  <span aria-hidden="true">→</span>
 </a>

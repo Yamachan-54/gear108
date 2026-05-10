@@ -17,16 +17,24 @@ const OUT = join(ROOT, 'public', 'og');
 
 const COLLECTIONS = ['reviews', 'roundups', 'news', 'guides', 'deals'];
 
-// カテゴリ別のグラデーション + アクセントカラー（雑誌の特集ページ風）
-const CATEGORY_THEME = {
-  keyboard:   { from: '#0e3a4f', to: '#0d2030', accent: '#2dd4bf', label: 'KEYBOARD' },
-  monitor:    { from: '#2a1547', to: '#1a0a2e', accent: '#c084fc', label: 'MONITOR' },
-  pc:         { from: '#1a1a1a', to: '#0a0a0a', accent: '#e5e7eb', label: 'PC / NOTE' },
-  desk:       { from: '#3d2818', to: '#1a0f08', accent: '#fb923c', label: 'DESK' },
-  peripheral: { from: '#0e3320', to: '#06180e', accent: '#86efac', label: 'PERIPHERAL' },
-  storage:    { from: '#0c2e5c', to: '#061226', accent: '#60a5fa', label: 'STORAGE' },
-  audio:      { from: '#3b0f3a', to: '#1a0418', accent: '#f472b6', label: 'AUDIO' },
-  power:      { from: '#4a1a0a', to: '#1f0a04', accent: '#fbbf24', label: 'POWER' },
+// Margin の戒律「色は1色のみ」に従い、全カテゴリ共通の墨ベース + 朱赤一色。
+// カテゴリの違いは label 文字でのみ示す（色では示さない）。
+const SHARED_THEME = {
+  bg_top:    '#1a1a1a',  // ink
+  bg_bottom: '#0a0a0a',  // deep ink
+  paper:     '#fdfdfd',  // 紙白（タイトル文字色に使用）
+  akane:     '#c1272d',  // 朱赤 — 唯一のアクセント
+};
+
+const CATEGORY_LABEL = {
+  keyboard:   'KEYBOARD',
+  monitor:    'MONITOR',
+  pc:         'PC / NOTE',
+  desk:       'DESK',
+  peripheral: 'PERIPHERAL',
+  storage:    'STORAGE',
+  audio:      'AUDIO',
+  power:      'POWER',
 };
 
 const COLLECTION_LABEL = {
@@ -142,12 +150,12 @@ function pickHeadlineStat(d, collection) {
 }
 
 function buildSvg({ title, category, collection, stat }) {
-  const theme = CATEGORY_THEME[category] || CATEGORY_THEME.peripheral;
+  const t = SHARED_THEME;
+  const catLabel = CATEGORY_LABEL[category] || String(category).toUpperCase();
   const collLabel = COLLECTION_LABEL[collection] || collection.toUpperCase();
-  // 全角換算10.5で折る（64px font * 10.5 ≒ 672px、タイトル領域 x=80〜780 内に収まる）
+  // 全角換算10.5で折る
   const lines = wrapTitle(title, 10.5, 3);
 
-  // 行数別に縦位置調整（中央寄せ感）
   const titleStartY = lines.length === 1 ? 380 : lines.length === 2 ? 340 : 300;
   const titleLineH = 80;
 
@@ -161,95 +169,90 @@ function buildSvg({ title, category, collection, stat }) {
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="${theme.from}"/>
-      <stop offset="100%" stop-color="${theme.to}"/>
-    </linearGradient>
-    <linearGradient id="accentBar" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="${theme.accent}"/>
-      <stop offset="100%" stop-color="${theme.accent}" stop-opacity="0"/>
+      <stop offset="0%" stop-color="${t.bg_top}"/>
+      <stop offset="100%" stop-color="${t.bg_bottom}"/>
     </linearGradient>
     <pattern id="grid" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="${theme.accent}" stroke-width="0.5" opacity="0.06"/>
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="${t.akane}" stroke-width="0.5" opacity="0.05"/>
     </pattern>
     <style>
       .title {
-        font-family: -apple-system, "Hiragino Sans", "Yu Gothic UI", sans-serif;
-        font-weight: 800;
-        font-size: 64px;
-        fill: #ffffff;
-        letter-spacing: -1px;
+        font-family: 'Noto Serif JP', 'Yu Mincho', serif;
+        font-weight: 700;
+        font-size: 60px;
+        fill: ${t.paper};
+        letter-spacing: -0.5px;
       }
       .badge {
-        font-family: ui-monospace, "Menlo", monospace;
+        font-family: 'Fira Code', ui-monospace, monospace;
         font-weight: 700;
-        font-size: 22px;
-        fill: ${theme.accent};
-        letter-spacing: 2px;
-      }
-      .stat-num {
-        font-family: -apple-system, sans-serif;
-        font-weight: 900;
-        font-size: 160px;
-        fill: ${theme.accent};
-        opacity: 0.95;
-        letter-spacing: -6px;
-      }
-      .stat-label {
-        font-family: ui-monospace, "Menlo", monospace;
-        font-weight: 700;
-        font-size: 16px;
-        fill: ${theme.accent};
+        font-size: 20px;
+        fill: ${t.akane};
         letter-spacing: 3px;
       }
+      .stat-num {
+        font-family: 'Noto Serif JP', serif;
+        font-weight: 700;
+        font-size: 200px;
+        fill: ${t.akane};
+        letter-spacing: -10px;
+      }
+      .stat-label {
+        font-family: 'Fira Code', monospace;
+        font-weight: 700;
+        font-size: 16px;
+        fill: ${t.akane};
+        letter-spacing: 4px;
+      }
       .brand {
-        font-family: -apple-system, sans-serif;
-        font-weight: 800;
+        font-family: 'Noto Serif JP', serif;
+        font-weight: 700;
         font-size: 28px;
-        fill: #ffffff;
+        fill: ${t.paper};
         letter-spacing: -0.5px;
       }
       .brand-sub {
-        font-family: ui-monospace, "Menlo", monospace;
-        font-size: 14px;
-        fill: #ffffff;
-        opacity: 0.6;
-        letter-spacing: 2px;
+        font-family: 'Fira Code', monospace;
+        font-weight: 400;
+        font-size: 13px;
+        fill: ${t.paper};
+        opacity: 0.55;
+        letter-spacing: 3px;
       }
     </style>
   </defs>
 
-  <!-- bg -->
+  <!-- 紙の背景 -->
   <rect width="1200" height="630" fill="url(#bg)"/>
   <rect width="1200" height="630" fill="url(#grid)"/>
 
-  <!-- 上部アクセントライン -->
-  <rect x="0" y="0" width="1200" height="6" fill="${theme.accent}"/>
+  <!-- 上部アクセントライン（朱赤の細線） -->
+  <rect x="0" y="0" width="1200" height="3" fill="${t.akane}"/>
 
-  <!-- 左上バッジ -->
+  <!-- 左上：collection · category（朱赤） -->
   <g>
-    <rect x="80" y="60" width="14" height="34" fill="${theme.accent}"/>
-    <text x="108" y="86" class="badge">${esc(collLabel)} · ${esc(theme.label)}</text>
+    <rect x="80" y="56" width="3" height="36" fill="${t.akane}"/>
+    <text x="100" y="82" class="badge">${esc(collLabel)} · ${esc(catLabel)}</text>
   </g>
 
-  <!-- タイトル -->
+  <!-- タイトル（明朝・紙白） -->
   ${titleSvg}
 
-  <!-- 右側に巨大な数字（タイトル領域 x=780 から右、上半分にまとめる） -->
+  <!-- 右側に巨大な数字（明朝・朱赤） -->
   <g>
-    <line x1="820" y1="120" x2="820" y2="460" stroke="${theme.accent}" stroke-width="1" opacity="0.3"/>
-    <text x="1140" y="320" class="stat-num" text-anchor="end">${esc(stat.value)}</text>
-    ${stat.label ? `<text x="1140" y="358" class="stat-label" text-anchor="end">${esc(stat.label)}</text>` : ''}
+    <line x1="820" y1="100" x2="820" y2="480" stroke="${t.akane}" stroke-width="1" opacity="0.25"/>
+    <text x="1140" y="340" class="stat-num" text-anchor="end">${esc(stat.value)}</text>
+    ${stat.label ? `<text x="1140" y="378" class="stat-label" text-anchor="end">${esc(stat.label)}</text>` : ''}
   </g>
 
-  <!-- 下部装飾線 -->
-  <line x1="80" y1="540" x2="380" y2="540" stroke="${theme.accent}" stroke-width="2"/>
-  <rect x="80" y="540" width="120" height="3" fill="${theme.accent}"/>
+  <!-- 下部の細罫線（雑誌のキリトリ風） -->
+  <line x1="80" y1="540" x2="320" y2="540" stroke="${t.akane}" stroke-width="1.5"/>
 
-  <!-- 左下ブランド -->
-  <text x="80" y="585" class="brand">gear<tspan fill="${theme.accent}">108</tspan></text>
-  <text x="80" y="608" class="brand-sub">ENGINEER GEAR REVIEW · UPTIME 108D</text>
+  <!-- 左下：ブランド -->
+  <text x="80" y="585" class="brand">gear<tspan fill="${t.akane}">108</tspan></text>
+  <text x="80" y="608" class="brand-sub">ENGINEER GEAR · UPTIME 108D</text>
 
-  <!-- 右下に小さなコールアウト -->
+  <!-- 右下：URL -->
   <text x="1140" y="608" class="brand-sub" text-anchor="end">gear108.pages.dev</text>
 </svg>`;
 }

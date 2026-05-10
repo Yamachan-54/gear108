@@ -1,16 +1,15 @@
 ---
-// 重要な一文を抜き出し、雑誌のプルクオートのように大きく表示する。
 interface Props {
   attribution?: string;
 }
 const { attribution } = Astro.props;
 ---
-<figure class="my-10 border-y border-neutral-300 py-6">
-  <blockquote class="text-xl md:text-2xl font-bold leading-snug text-neutral-900 tracking-tight">
+<figure class="my-12 border-t border-akane border-b border-rule py-8">
+  <blockquote class="font-serif text-xl md:text-2xl font-bold leading-[1.55] text-ink tracking-tight">
     <slot />
   </blockquote>
   {attribution && (
-    <figcaption class="mt-3 text-xs text-neutral-500 font-mono uppercase tracking-wider">
+    <figcaption class="mt-4 eyebrow text-ink-mute">
       — {attribution}
     </figcaption>
   )}

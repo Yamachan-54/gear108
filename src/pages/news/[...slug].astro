@@ -24,8 +24,8 @@ const d = entry.data;
 >
   <Content />
   {d.sourceUrl && (
-    <p class="mt-6 text-sm text-zinc-500">
-      参考: <a class="underline hover:text-orange-300" href={d.sourceUrl} rel="noopener" target="_blank">{d.source ?? d.sourceUrl}</a>
+    <p class="mt-6 text-sm text-ink-mute font-mono">
+      SOURCE: <a class="underline hover:text-akane" href={d.sourceUrl} rel="noopener" target="_blank">{d.source ?? d.sourceUrl}</a>
     </p>
   )}
 </BlogPostLayout>

@@ -1,28 +1,41 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProductCard from '../../components/ProductCard.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
 import { CATEGORY_LABELS } from '../../content.config';
+import type { Category } from '../../content.config';
 
 const items = (await getCollection('deals', ({ data }) => !data.draft)).sort(
   (a, b) => +new Date(b.data.pubDate) - +new Date(a.data.pubDate),
 );
 ---
 <BaseLayout title="セール情報" description="エンジニア向けガジェットのセール情報">
-  <h1 class="text-2xl font-bold mb-6">セール情報</h1>
+  <header class="mb-10 grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-6 pb-6 border-b border-rule">
+    <div>
+      <p class="eyebrow text-akane">DEAL</p>
+      <h1 class="font-serif text-3xl font-bold mt-1">セール情報</h1>
+    </div>
+    <p class="font-serif text-ink-soft leading-relaxed pt-1">
+      Amazon・楽天・公式の主要セールから、エンジニアに刺さる商品を抜粋します。
+    </p>
+  </header>
+
   {items.length === 0 ? (
-    <p class="text-zinc-500">まだ記事がありません。</p>
+    <p class="text-ink-mute font-serif">まだ記事がありません。</p>
   ) : (
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
       {items.map((e) => (
-        <ProductCard
+        <ArticleCard
           href={`/deals/${e.id}/`}
+          slug={e.id}
           title={e.data.title}
           description={e.data.description}
-          image={e.data.heroImage}
+          heroImage={e.data.heroImage}
           pubDate={new Date(e.data.pubDate)}
-          category={CATEGORY_LABELS[e.data.category]}
-          badge="セール"
+          category={e.data.category as Category}
+          categoryLabel={CATEGORY_LABELS[e.data.category as Category]}
+          badge="DEAL"
+          variant="medium"
         />
       ))}
     </div>

@@ -1,0 +1,41 @@
+---
+// 記事末に出す「執筆: Patch / 編集: Margin」の署名。
+// 雑誌のクレジット表記を意識した、控えめだが視覚的アンカーとなる版面。
+---
+<aside class="mt-16 pt-8 border-t border-rule grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 not-prose">
+  <div>
+    <p class="eyebrow text-ink-mute">CREDITS</p>
+    <p class="mt-1 text-xs text-ink-mute">この記事は2人で作っています。</p>
+  </div>
+  <div class="grid grid-cols-2 gap-6">
+    <div class="flex items-start gap-3">
+      <picture>
+        <source srcset="/avatars/patch-thumb.webp" type="image/webp" />
+        <img src="/avatars/patch.png" alt="Patch" width="48" height="48" loading="lazy" class="w-12 h-12 rounded-sm border border-rule" />
+      </picture>
+      <div class="min-w-0">
+        <p class="text-[10px] font-mono font-bold tracking-widest text-ink-mute uppercase">著・実装</p>
+        <p class="font-serif text-base font-bold text-ink leading-tight">Patch</p>
+        <p class="mt-1 text-xs text-ink-soft leading-snug">
+          108日眠れなかった独学の田舎プログラマー。
+          <span class="font-mono">git diff してから commit する</span>派。
+        </p>
+      </div>
+    </div>
+
+    <div class="flex items-start gap-3">
+      <picture>
+        <source srcset="/avatars/margin-thumb.webp" type="image/webp" />
+        <img src="/avatars/margin.png" alt="Margin" width="48" height="48" loading="lazy" class="w-12 h-12 rounded-sm border border-rule" />
+      </picture>
+      <div class="min-w-0">
+        <p class="text-[10px] font-mono font-bold tracking-widest text-ink-mute uppercase">編集・装幀</p>
+        <p class="font-serif text-base font-bold text-ink leading-tight">Margin</p>
+        <p class="mt-1 text-xs text-ink-soft leading-snug">
+          雑誌の最終号を組み終えた夜に水底に流れ着いた編集デザイナー。
+          <span class="font-mono">明朝・ゴシック・Fira Code</span>の三点で組む。
+        </p>
+      </div>
+    </div>
+  </div>
+</aside>

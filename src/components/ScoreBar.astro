@@ -1,24 +1,24 @@
 ---
 interface Props {
   label: string;
-  score: number;       // 0..max
-  max?: number;        // 既定 5
+  score: number;
+  max?: number;
   note?: string;
 }
 const { label, score, max = 5, note } = Astro.props;
 const pct = Math.max(0, Math.min(1, score / max)) * 100;
 ---
-<div class="my-2">
+<div class="my-3 not-prose">
   <div class="flex items-baseline justify-between text-sm">
-    <span class="font-medium text-neutral-800">{label}</span>
-    <span class="font-mono text-neutral-700">{score.toFixed(1)} / {max}</span>
+    <span class="font-serif font-medium text-ink">{label}</span>
+    <span class="font-mono text-ink-soft">{score.toFixed(1)} / {max}</span>
   </div>
-  <div class="mt-1 h-2 rounded bg-neutral-100 overflow-hidden">
+  <div class="mt-1.5 h-px bg-rule overflow-hidden">
     <div
-      class="h-full bg-neutral-800 rounded"
+      class="h-full bg-ink"
       style={`width: ${pct}%`}
       aria-hidden="true"
     ></div>
   </div>
-  {note && <p class="mt-1 text-xs text-neutral-500">{note}</p>}
+  {note && <p class="mt-1.5 text-xs text-ink-mute font-serif">{note}</p>}
 </div>

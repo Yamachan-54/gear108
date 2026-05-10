@@ -27,27 +27,27 @@ const d = entry.data;
   collection="reviews"
 >
   {d.rating && (
-    <p class="text-base font-semibold text-neutral-800 mb-2">
-      評価: {'★'.repeat(Math.round(d.rating))}{'☆'.repeat(5 - Math.round(d.rating))}
-      <span class="text-neutral-500 text-sm ml-2 font-normal">({d.rating.toFixed(1)} / 5)</span>
+    <p class="font-mono text-base text-ink mb-2 not-prose">
+      <span class="text-akane">{'★'.repeat(Math.round(d.rating))}</span><span class="text-rule">{'☆'.repeat(5 - Math.round(d.rating))}</span>
+      <span class="text-ink-mute text-sm ml-3">{d.rating.toFixed(1)} / 5</span>
     </p>
   )}
 
   {(d.pros.length > 0 || d.cons.length > 0) && (
-    <div class="grid md:grid-cols-2 gap-4 my-6 text-sm">
+    <div class="grid md:grid-cols-2 gap-x-8 gap-y-4 my-8 text-sm not-prose">
       {d.pros.length > 0 && (
-        <div class="border border-neutral-200 rounded p-4 bg-neutral-50">
-          <h3 class="font-bold text-sm mb-2">良かった点</h3>
-          <ul class="space-y-1 list-disc pl-5">
-            {d.pros.map((p) => <li>{p}</li>)}
+        <div class="border-t-2 border-ink pt-3">
+          <p class="eyebrow text-akane mb-2">良かった点</p>
+          <ul class="space-y-1.5">
+            {d.pros.map((p) => <li class="flex gap-2"><span class="text-akane font-mono shrink-0">+</span><span class="text-ink-soft">{p}</span></li>)}
           </ul>
         </div>
       )}
       {d.cons.length > 0 && (
-        <div class="border border-neutral-200 rounded p-4 bg-neutral-50">
-          <h3 class="font-bold text-sm mb-2">気になった点</h3>
-          <ul class="space-y-1 list-disc pl-5">
-            {d.cons.map((c) => <li>{c}</li>)}
+        <div class="border-t-2 border-ink pt-3">
+          <p class="eyebrow text-ink-mute mb-2">気になった点</p>
+          <ul class="space-y-1.5">
+            {d.cons.map((c) => <li class="flex gap-2"><span class="text-ink-mute font-mono shrink-0">−</span><span class="text-ink-soft">{c}</span></li>)}
           </ul>
         </div>
       )}

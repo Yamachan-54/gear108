@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProductCard from '../../components/ProductCard.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
 import { CATEGORY_LABELS, COLLECTION_LABELS } from '../../content.config';
 import type { Category, CollectionName } from '../../content.config';
+import { CATEGORY_SHORT } from '../../lib/category-theme';
 
 export async function getStaticPaths() {
   const cats = Object.keys(CATEGORY_LABELS) as Category[];
@@ -35,30 +36,42 @@ const items: Item[] = buckets
   .sort((a, b) => +new Date(b.data.pubDate) - +new Date(a.data.pubDate));
 
 const label = CATEGORY_LABELS[category];
+const short = CATEGORY_SHORT[category];
 ---
 <BaseLayout
   title={`${label} | カテゴリ`}
   description={`${label}に関するレビュー・比較・ニュース・選び方ガイド・セール情報`}
 >
-  <nav class="text-xs text-zinc-500 mb-4">
-    <a href="/" class="hover:text-orange-300">ホーム</a>
-    <span class="mx-1">/</span>
-    <span>カテゴリ: {label}</span>
+  <nav class="text-xs font-mono text-ink-mute mb-6 flex flex-wrap gap-x-2">
+    <a href="/" class="hover:text-akane">HOME</a>
+    <span>/</span>
+    <span class="uppercase">CATEGORY · {short}</span>
   </nav>
-  <h1 class="text-2xl font-bold mb-6">{label}</h1>
+
+  <header class="mb-10 grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-6 pb-6 border-b border-rule">
+    <div>
+      <p class="eyebrow text-akane">CATEGORY</p>
+      <p class="font-mono text-xs text-ink-mute mt-1">{short}</p>
+    </div>
+    <h1 class="font-serif text-4xl font-bold leading-tight">{label}</h1>
+  </header>
+
   {items.length === 0 ? (
-    <p class="text-zinc-500">このカテゴリにはまだ記事がありません。</p>
+    <p class="text-ink-mute font-serif">このカテゴリにはまだ記事がありません。</p>
   ) : (
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
       {items.map((item) => (
-        <ProductCard
+        <ArticleCard
           href={`/${item.collection}/${item.slug}/`}
+          slug={item.slug}
           title={item.data.title}
           description={item.data.description}
-          image={item.data.heroImage}
+          heroImage={item.data.heroImage}
           pubDate={new Date(item.data.pubDate)}
-          category={label}
-          badge={COLLECTION_LABELS[item.collection]}
+          category={item.data.category as Category}
+          categoryLabel={label}
+          badge={COLLECTION_LABELS[item.collection].toUpperCase()}
+          variant="medium"
         />
       ))}
     </div>

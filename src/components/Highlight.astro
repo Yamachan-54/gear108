@@ -1,5 +1,6 @@
 ---
-// 記事中で特に強調したい結論や注意点を、囲みで目立たせるコールアウト。
+// Margin の戒律「色は1色のみ」に従い、3 variant とも朱赤のみで差別化。
+// 違いは枠の太さ・配置・ラベル文字で出す。
 type Variant = 'note' | 'warn' | 'tip';
 
 interface Props {
@@ -9,20 +10,20 @@ interface Props {
 
 const { variant = 'note', title } = Astro.props;
 
-const VARIANT: Record<Variant, { border: string; bg: string; tag: string; tagBg: string; label: string }> = {
-  note: { border: 'border-neutral-300', bg: 'bg-neutral-50', tag: 'text-neutral-700', tagBg: 'bg-neutral-200', label: 'NOTE' },
-  warn: { border: 'border-amber-400', bg: 'bg-amber-50', tag: 'text-amber-900', tagBg: 'bg-amber-200', label: '注意' },
-  tip:  { border: 'border-emerald-400', bg: 'bg-emerald-50', tag: 'text-emerald-900', tagBg: 'bg-emerald-200', label: 'TIP' },
+const VARIANT: Record<Variant, { label: string; styleClass: string }> = {
+  note: { label: 'NOTE',  styleClass: 'border-l border-rule pl-4' },
+  warn: { label: '注意',  styleClass: 'border-l-[3px] border-akane pl-4' },
+  tip:  { label: 'TIP',   styleClass: 'border-l-[3px] border-akane pl-4 bg-paper-soft py-3 -ml-4 px-4' },
 };
 
 const v = VARIANT[variant];
 ---
-<aside class={`my-6 border-l-4 ${v.border} ${v.bg} px-4 py-3 rounded-r`}>
-  <div class={`inline-flex items-center gap-2 text-xs font-mono font-bold tracking-wider ${v.tag}`}>
-    <span class={`px-1.5 py-0.5 rounded ${v.tagBg}`}>{v.label}</span>
-    {title && <span class="text-neutral-700 font-sans tracking-normal">{title}</span>}
+<aside class={`my-7 ${v.styleClass}`}>
+  <div class="flex items-baseline gap-2 mb-1">
+    <span class="eyebrow text-akane">{v.label}</span>
+    {title && <span class="font-serif font-bold text-ink">{title}</span>}
   </div>
-  <div class="mt-2 text-sm text-neutral-800 leading-relaxed">
+  <div class="text-sm md:text-base text-ink-soft leading-relaxed">
     <slot />
   </div>
 </aside>

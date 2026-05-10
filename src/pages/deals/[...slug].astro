@@ -25,12 +25,12 @@ const isExpired = d.saleEndsAt ? d.saleEndsAt.getTime() < Date.now() : false;
   tags={d.tags}
   collection="deals"
 >
-  <div class="my-4 p-4 rounded-lg border border-orange-700/50 bg-orange-950/20">
+  <div class="my-6 border-l-[3px] border-akane pl-4 not-prose">
     {d.discountPercent && (
-      <p class="text-orange-300 font-bold">{d.discountPercent}% OFF</p>
+      <p class="font-serif text-2xl font-bold text-akane">{d.discountPercent}% OFF</p>
     )}
     {d.saleEndsAt && (
-      <p class={`text-sm ${isExpired ? 'text-rose-400' : 'text-zinc-300'}`}>
+      <p class={`text-sm font-mono mt-1 ${isExpired ? 'text-ink-mute line-through' : 'text-ink-soft'}`}>
         セール終了: {d.saleEndsAt.toLocaleString('ja-JP')}
         {isExpired && ' （終了済み）'}
       </p>

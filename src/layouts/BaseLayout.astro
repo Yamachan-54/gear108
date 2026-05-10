@@ -2,7 +2,6 @@
 import '../styles/global.css';
 import { COLLECTION_LABELS, CATEGORY_LABELS } from '../content.config';
 import type { Category } from '../content.config';
-import { CATEGORY_COLOR } from '../lib/category-theme';
 
 interface Props {
   title: string;
@@ -31,6 +30,11 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
     <link rel="sitemap" href="/sitemap-index.xml" />
     <meta name="description" content={description} />
 
+    {/* Margin の戒律：三位一体タイポ */}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Inter:wght@400;500;700&family=Fira+Code:wght@400;500;700&display=swap" />
+
     <meta property="og:type" content="article" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -43,57 +47,68 @@ const categoryNav = Object.entries(CATEGORY_LABELS) as [Category, string][];
 
     <title>{title} | gear108</title>
   </head>
-  <body class="min-h-screen flex flex-col bg-white text-neutral-900">
-    {/* ヘッダー：上部にロゴ+コレクションタブ、下にカテゴリ色帯 */}
-    <header class="border-b border-neutral-200 sticky top-0 bg-white/95 backdrop-blur z-20">
-      {/* 上段：ロゴ + コレクションタブ */}
-      <div class="border-b border-neutral-100">
-        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <a href="/" class="font-black text-2xl tracking-tight text-neutral-900 hover:text-pink-600 transition-colors">
-            gear<span class="text-pink-500">108</span>
+  <body class="min-h-screen flex flex-col bg-paper text-ink">
+    {/* ヘッダー：上段マスト + 下段カテゴリラベル列 */}
+    <header class="border-b border-rule sticky top-0 bg-paper/95 backdrop-blur z-20">
+      <div class="border-b border-rule">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-baseline justify-between gap-6">
+          <a href="/" class="text-2xl font-serif font-bold tracking-tight text-ink hover:text-akane transition-colors">
+            gear<span style={`color:${'#c1272d'}`}>108</span>
           </a>
-          <nav class="hidden md:flex flex-wrap gap-x-5 gap-y-1 text-sm text-neutral-700 font-medium">
+          <nav class="hidden md:flex items-baseline gap-x-6 text-sm">
             {collectionNav.map(([slug, label]) => (
-              <a href={`/${slug}/`} class="hover:text-pink-600 transition-colors">{label}</a>
+              <a href={`/${slug}/`} class="text-ink-soft hover:text-akane transition-colors">{label}</a>
             ))}
+            <a href="/about/" class="text-ink-soft hover:text-akane transition-colors">運営</a>
           </nav>
         </div>
       </div>
-      {/* 下段：カテゴリ色帯 */}
+      {/* カテゴリ：英字短縮、横スクロール、墨色の上に朱赤の点 */}
       <div class="overflow-x-auto">
-        <div class="max-w-6xl mx-auto px-4 py-2 flex items-center gap-1 text-[11px] font-mono font-bold tracking-wider whitespace-nowrap">
-          <span class="text-neutral-400 mr-2">CATEGORIES</span>
-          {categoryNav.map(([slug, label]) => {
-            const c = CATEGORY_COLOR[slug];
-            return (
-              <a
-                href={`/categories/${slug}/`}
-                class="px-2 py-1 rounded hover:bg-neutral-100 transition-colors flex items-center gap-1.5"
-              >
-                <span class="inline-block w-2 h-2 rounded-full" style={`background-color:${c.hex}`}></span>
-                <span class="text-neutral-700">{label}</span>
-              </a>
-            );
-          })}
+        <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center gap-1 whitespace-nowrap">
+          <span class="eyebrow text-ink-mute mr-3 shrink-0">CATEGORIES</span>
+          {categoryNav.map(([slug, label]) => (
+            <a
+              href={`/categories/${slug}/`}
+              class="font-mono text-[11px] font-bold tracking-wider uppercase px-2 py-1 text-ink-soft hover:text-akane transition-colors flex items-center gap-1.5"
+            >
+              <span class="text-ink-mute">{label}</span>
+            </a>
+          ))}
         </div>
       </div>
     </header>
 
-    <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-8">
+    <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-10">
       <slot />
     </main>
 
-    <footer class="border-t border-neutral-200 mt-12 py-8 text-sm text-neutral-500">
-      <div class="max-w-6xl mx-auto px-4">
-        <p class="font-bold text-neutral-700">
-          gear<span class="text-pink-500">108</span> — エンジニア向け最新ガジェット情報サイト
-        </p>
-        <p class="mt-2 text-xs">
-          ※ 本サイトには Amazonアソシエイト・楽天アフィリエイト等のリンクが含まれます。
-        </p>
-        <p class="mt-2 text-xs">
-          © {new Date().getFullYear()} gear108
-        </p>
+    <footer class="border-t border-rule mt-16 py-10 text-sm text-ink-soft">
+      <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <p class="font-serif font-bold text-ink text-lg">
+            gear<span style={`color:${'#c1272d'}`}>108</span>
+          </p>
+          <p class="mt-1 text-xs text-ink-mute">エンジニア向け最新ガジェット情報サイト</p>
+        </div>
+        <div class="text-xs">
+          <p class="eyebrow text-ink-mute mb-2">セクション</p>
+          <ul class="space-y-1">
+            {collectionNav.map(([slug, label]) => (
+              <li><a href={`/${slug}/`} class="text-ink-soft hover:text-akane">{label}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div class="text-xs">
+          <p class="eyebrow text-ink-mute mb-2">運営</p>
+          <ul class="space-y-1">
+            <li><a href="/about/" class="text-ink-soft hover:text-akane">運営者について</a></li>
+          </ul>
+          <p class="mt-4 text-ink-mute leading-relaxed">
+            ※ 本サイトには Amazonアソシエイト・楽天アフィリエイト等のリンクが含まれます。
+          </p>
+          <p class="mt-2 text-ink-mute">© {new Date().getFullYear()} gear108</p>
+        </div>
       </div>
     </footer>
   </body>
