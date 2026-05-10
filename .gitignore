@@ -16,6 +16,11 @@ pnpm-debug.log*
 .env.production
 .env.local
 
+# secrets / credentials（絶対 git に入れない）
+*-key.json
+gear108-sc-key.json
+.gear108/
+
 # OS
 .DS_Store
 Thumbs.db
