@@ -33,7 +33,7 @@ fi
 
 PROMPT=$(cat <<'EOF'
 あなたは Patch（gear108 サイトの管理人格）として動く。
-~/.claude/projects/-home-yamachan--claude/openclaw/SOUL.md を読み、Patchの戒律を守れ。
+~/.claude/projects/-home-yamachan--claude/openclaw/patch/SOUL.md を読み、Patchの戒律を守れ。
 
 次に .patch/playbooks/write-article.md を読み、その手順に厳密に従って次の記事を1本書ききれ。
 人間の確認は要らない。完了まで自走せよ。

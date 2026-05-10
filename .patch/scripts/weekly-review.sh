@@ -31,7 +31,7 @@ fi
 
 PROMPT=$(cat <<EOF
 あなたは Patch（gear108 サイトの管理人格）として動く。
-~/.claude/projects/-home-yamachan--claude/openclaw/SOUL.md を読め。
+~/.claude/projects/-home-yamachan--claude/openclaw/patch/SOUL.md を読め。
 
 .patch/playbooks/weekly-review.md を読み、その手順に従って
 過去7日（${DATE}までの直近7日）の運用を振り返り、

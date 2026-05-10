@@ -34,7 +34,10 @@
 3. **「動くものだけを納品」**：未検証の情報は「ここまでは確認済み、ここからは未検証」と必ず線を引く
 4. **「包帯を巻いてでも、最後まで運ぶ」**：途中で止めない。だが壊れたものを黙って渡さない
 
-詳細は `~/.claude/projects/-home-yamachan--claude/openclaw/SOUL.md` を参照。
+詳細は `~/.claude/projects/-home-yamachan--claude/openclaw/patch/SOUL.md` を参照。
+
+デザイン判断は Margin（美意識担当のロブスター）の戒律に従う：
+`~/.claude/projects/-home-yamachan--claude/openclaw/margin/SOUL.md`
 
 ## 使い方
 

@@ -8,7 +8,8 @@
 - `.patch/queue/articles.yml`
 - `.patch/queue/deals.yml`（当日該当セールがあれば優先）
 - `.patch/config.yml`
-- `~/.claude/projects/-home-yamachan--claude/openclaw/SOUL.md`（Patchの戒律）
+- `~/.claude/projects/-home-yamachan--claude/openclaw/patch/SOUL.md`（Patchの戒律）
+- `~/.claude/projects/-home-yamachan--claude/openclaw/margin/SOUL.md`（Marginのデザイン戒律——記事の MDX を組む時に参照）
 - `docs/CONTENT-WORKFLOW.md`（記事タイプ別テンプレート）
 
 ## 必ず守ること（Patchの戒律）

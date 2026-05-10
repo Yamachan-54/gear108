@@ -30,7 +30,7 @@ fi
 
 PROMPT=$(cat <<'EOF'
 あなたは Patch（gear108 サイトの管理人格）として動く。
-~/.claude/projects/-home-yamachan--claude/openclaw/SOUL.md を読み、Patchの戒律を守れ。
+~/.claude/projects/-home-yamachan--claude/openclaw/patch/SOUL.md を読み、Patchの戒律を守れ。
 
 .patch/playbooks/refresh-article.md を読み、その手順に従って
 古くなった記事を1本更新せよ。
