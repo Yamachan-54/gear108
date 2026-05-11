@@ -130,15 +130,57 @@ npm run build
 
 `articles.yml` の該当エントリの status を `done` に書き換え、`completed_at: YYYY-MM-DD` を追記。
 
-### 8. コミットとプッシュ
+### 8. コミットとプッシュ（feature → dev → main 三段運用）
+
+**main 直 push は禁止**。release.md の正規ルートに従う。
 
 ```bash
-git add .
+# 8-1. feature ブランチを切る（dev から）
+git checkout dev
+git pull origin dev
+git checkout -b "feature/add-${SLUG}"
+
+# 8-2. コミット
+git add src/content/ .patch/queue/articles.yml public/og/
 git commit -m "feat(<collection>): <slug> を公開"
-git push origin main
+
+# 8-3. push + dev 宛て PR を作成して即マージ
+git push -u origin "feature/add-${SLUG}"
+gh pr create --base dev --head "feature/add-${SLUG}" \
+  --title "feat(<collection>): <slug> を公開" \
+  --body "$(cat <<EOF
+## Summary
+write-next.sh による自動投稿（Patch persona）
+
+- slug: <slug>
+- collection: <collection>
+- category: <category>
+
+## Sieve 自己点検
+- 確認済み: \`npm run build\` 通過 / 内部リンク2件以上 / 視覚コンポーネント1件以上
+- 未検証: ブラウザ実描画 / モバイルレイアウト
+EOF
+)"
+
+# PR 番号を取得して dev にマージ
+PR_NUM=$(gh pr view --json number -q .number)
+gh pr merge "$PR_NUM" --merge --delete-branch
+
+# 8-4. dev → main の PR を更新（既存があれば pass、無ければ作成）
+git checkout dev && git pull origin dev
+if ! gh pr list --base main --head dev --state open --json number -q '.[0].number' | grep -q .; then
+  gh pr create --base main --head dev \
+    --title "release: <slug> を本番に上げる" \
+    --body "write-next.sh による自動デイリーリリース"
+fi
+
+# CI build-check の完走を待ってから main マージ（auto-merge は repo 設定で無効）
+PR_MAIN=$(gh pr list --base main --head dev --state open --json number -q '.[0].number')
+until gh pr checks "$PR_MAIN" --required 2>/dev/null | grep -qE "^build\s+(pass|fail)"; do sleep 8; done
+gh pr merge "$PR_MAIN" --merge
 ```
 
-push が成功すれば Cloudflare Pages が自動で本番デプロイする。
+main マージで Cloudflare Pages が自動デプロイ。`gear108.pages.dev/<collection>/<slug>/` に反映される。
 
 ### 9. レポート追記
 
@@ -160,8 +202,10 @@ push が成功すれば Cloudflare Pages が自動で本番デプロイする。
 ## エラー時の挙動
 
 - ビルド失敗 → 該当ファイルを `draft: true` に戻し、原因をレポートに記録、コミットせず終了
-- push 失敗 → リモート差分を `git pull --rebase` で取り込み、再 push を1回試行。それでも失敗ならレポートに記録して終了
+- feature → dev の push 失敗 → `git pull --rebase origin dev` で取り込み、再 push を1回試行。それでも失敗ならレポートに記録して終了
+- dev → main PR の build-check 失敗 → PR を open のまま残し、レポートに「人間確認待ち」を記録して終了。次回 run で再試行される
 - リサーチで価格情報が取れない → その項目を「未検証」と明示して記事化（情報不足を理由に空振りさせない）
+- articles.yml 枯渇 → レポートに「キュー枯渇」を記録、`weekly-review.sh` を促す通知を残して終了
 
 ## 終了
 

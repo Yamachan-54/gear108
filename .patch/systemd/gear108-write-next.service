@@ -1,0 +1,13 @@
+[Unit]
+Description=gear108 write-next (Patch persona daily article)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/home/yamachan/Public/Project/gear108
+ExecStart=/home/yamachan/Public/Project/gear108/.patch/scripts/write-next.sh
+StandardOutput=append:/home/yamachan/Public/Project/gear108/.patch/reports/cron.log
+StandardError=append:/home/yamachan/Public/Project/gear108/.patch/reports/cron.log
+TimeoutStartSec=30min
+Environment=PATH=/home/yamachan/.local/bin:/usr/local/bin:/usr/bin:/bin
