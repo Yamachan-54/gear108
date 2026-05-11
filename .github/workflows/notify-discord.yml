@@ -1,0 +1,34 @@
+name: notify-discord
+
+# main への push かつ src/content 配下に変更があった時のみ走る。
+# 新規追加された .md/.mdx を検出して Discord に Patch ペルソナで通知する。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/content/**/*.md'
+      - 'src/content/**/*.mdx'
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # 差分計算のため全履歴を取得
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Notify Discord on new articles
+        env:
+          BEFORE_SHA: ${{ github.event.before }}
+          AFTER_SHA: ${{ github.sha }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: node .github/scripts/notify-discord.mjs

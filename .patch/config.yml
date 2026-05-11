@@ -7,8 +7,8 @@ site:
   build_command: npm run build
 
 writing:
-  # 平日5本/週、月-金の21:00 に1本ずつ
-  schedule_cron: "0 21 * * 1-5"
+  # 週 1 本、金曜 21:00 (systemd timer 側で実装。下記 cron は参考表記)
+  schedule_cron: "0 21 * * 5"
   max_articles_per_day: 1
   draft_first: false  # true にすると draft: true で書き、人間レビュー後 false に変える運用
   default_tags_min: 3
@@ -38,11 +38,14 @@ reporting:
   retain_days: 90
 
 notifications:
-  # 通知先（任意）— 必要なら有効化
-  # line_token: ""  # LINE Notify
+  # Discord 通知は .github/workflows/notify-discord.yml で配線。
+  # webhook URL は GitHub repo secret DISCORD_WEBHOOK_URL に登録する。
+  # セットアップ手順: .patch/notify/README.md
+  discord: github_actions
+  # line_token: ""  # LINE Notify (未使用)
   # slack_webhook: ""
   # mattermost_webhook: ""
-  log_only: true
+  log_only: false
 
 guardrails:
   # AI生成記事の品質ガード
