@@ -37,11 +37,12 @@ queue:
   - slug: dell-u2725qe-review
     collection: reviews
     category: monitor
-    topic: "Dell U2725QE 4K 27インチモニターのレビュー。USB-C 90W 給電とKVM機能"
+    topic: "Dell U2725QE 4K 27インチモニターのレビュー。Thunderbolt 4・140W 給電とKVM機能"
     product: "Dell U2725QE"
     priority: high
-    status: pending
-    notes: "W20-Mon (2026-05-11): 既存 seed に monitor 無し。USB-C 90W+KVM で検索意図明確"
+    status: done
+    completed_at: 2026-05-11
+    notes: "W20-Mon (2026-05-11): Beacon 検証 Go。給電は140W EPR（topic の90Wは旧型U2723QEの数字、訂正済み）"
 
   - slug: 4k-27-inch-best-2026
     collection: roundups
