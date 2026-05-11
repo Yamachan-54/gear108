@@ -1,0 +1,185 @@
+---
+title: "Dell U2725QE レビュー：140W給電とKVMの全部入り4K"
+description: "Dell U2725QE は4K 27インチ・Thunderbolt 4・140W給電・KVM の全部入り。実売9万円台のIPS Blackモニターを、エンジニアの実務観点で検証する。"
+pubDate: 2026-05-11
+category: monitor
+tags:
+  - Dell
+  - モニター
+  - 4K
+  - Thunderbolt
+  - USB-C
+  - KVM
+productName: "Dell U2725QE"
+productPrice: 92800
+rating: 4.3
+pros:
+  - Thunderbolt 4 アップストリーム1本で映像+140W給電+ハブが完結する
+  - IPS Black パネルで実効コントラスト 3000:1、4K 120Hz + DisplayHDR 600
+  - KVM 機能で Mac と Windows を同じ周辺機器で切替できる
+  - 3年間プレミアムパネル交換保証（ドット欠け1個から交換）
+cons:
+  - ファームウェアが固まる事象が複数のユーザーから報告されている
+  - USB-C 入力の認識が不安定という報告もある
+  - 実売 92,800円〜、エントリー帯のモニターから乗り換えると価格差が重い
+affiliateLinks:
+  amazon: "https://www.amazon.co.jp/dp/B0F4P9D1L1?tag=YOURTAG-22"
+  rakuten: "https://search.rakuten.co.jp/search/mall/Dell+U2725QE/?af_id=YOURID"
+  yodobashi: "https://www.yodobashi.com/?word=U2725QE"
+  official: "https://www.dell.com/ja-jp/shop/cty/apd/210-bqmd/"
+draft: false
+---
+import Highlight from '../../components/Highlight.astro';
+import ComparisonGrid from '../../components/ComparisonGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+import ScoreBar from '../../components/ScoreBar.astro';
+
+<Highlight variant="tip" title="結論を先に">
+悪い知らせから先に出す。Dell U2725QE は実売 9 万円台の 4K 27 インチで、Thunderbolt 4・140W 給電・KVM の全部入りだが、**価格.com の実機レビューでは「ファームウェアが 10 秒前後フリーズする」「USB-C 入力を認識しない時がある」という不満が複数報告されている**。スペック表だけ見て買うモニターではない。それでも IPS Black の 3000:1 コントラストと、Mac と Windows を 1 本のケーブルで切り替えられる KVM の実利が欲しいなら、9 万円台の意味は通る。
+</Highlight>
+
+## 悪い知らせ — 9万円のモニターでも完璧ではない
+
+最初に地雷を全部見せておく。Dell U2725QE には、Web 検索で見るスペック表からは見えない問題が確認できる範囲で 3 種類ある。
+
+**1. ファームウェアのフリーズ**
+価格.com の実機レビューで複数報告がある。入力切替や信号の入れ替えが発生する場面で、画面が 10 秒前後固まる事象だ。本体側のメニュー操作や OSD 操作にも影響する。私はこの問題を**未検証**だが、複数の独立した報告が出ている以上、購入前に Dell のサポートで対象ロットの確認をした方が良い。
+
+**2. USB-C 入力の認識不良**
+これも複数の価格.com レビューで報告されている。電源を入れ直すと直る軽微なものから、ケーブルの抜き差しが必要なものまで幅がある。Thunderbolt 4 で接続している場合と、USB-C アップストリームで接続している場合で挙動が違う可能性が高いが、**ここは未検証**。
+
+**3. USB ハブの実効速度**
+スペック表では USB 3.2 Gen 2（10Gbps）を謳う USB-A ポートが、実測で USB 2.0 相当の速度しか出ないという報告がある。外付け SSD でビルドキャッシュを置く運用を考えているなら、Thunderbolt 4 ダウンストリームポートを使うか、PC 側のポートを使うのが安全だ。
+
+<Highlight variant="warn" title="ここまでは確認済み、ここからは未検証">
+**確認済み**：公式仕様（解像度・パネル・給電 140W EPR・KVM 仕様・3年保証）と、価格コム / 海外レビュー（RTINGS, Windows Central, How-To Geek）に書かれた評価傾向。
+**未検証**：上記 3 つの不具合報告を、自分の手元で再現したわけではない。報告の存在を伝えるところまでだ。本番購入前には、最新ファームウェア（M2C202 系統が出ているはず）が適用されているロットを選んでほしい。
+</Highlight>
+
+## このモニターの設計思想を一行で
+
+「**Mac と Windows を、ケーブル 1 本ずつで同じデスクから操作する**」ためのドック型 4K モニター、と言い切っていい。
+
+ディスプレイとしての絵作りより、**Thunderbolt 4 ハブとしての機能性**が U2725QE の売りだ。前モデル U2723QE が「90W 給電 + ハブ」だったところを、本機は **140W EPR + Thunderbolt 4 デイジーチェーン + 2.5GbE LAN + KVM** にした。「モニター」のカテゴリで考えると過剰だが、「Mac mini と ThinkPad を 1 つの机で切り替える人」のカテゴリで考えると、必然の構成だ。
+
+## 主な仕様
+
+| 項目 | 内容 |
+|------|------|
+| パネル | IPS Black、4K (3840×2160)、27インチ |
+| リフレッシュレート | 120Hz |
+| コントラスト | 3000:1（IPS Black 強化） |
+| 輝度 | 450 cd/m²（HDR 時 ピーク 600 cd/m²） |
+| HDR | VESA DisplayHDR 600 |
+| 色域 | DCI-P3 99%、BT.2020 82.3% |
+| 給電 | Thunderbolt 4 アップストリーム最大 **140W EPR** |
+| 主要ポート | Thunderbolt 4 ×2、USB-C アップストリーム ×1、USB-A 10Gbps ×4、HDMI 2.1、DisplayPort 1.4 in/out、2.5GbE LAN |
+| KVM | USB-C 10Gbps KVM 内蔵、PiP/PbP 対応 |
+| スタンド | 高さ調整・チルト・スイベル・**ピボット 45°/45°** |
+| 重量 | 7.06kg（スタンド込み） |
+| 保証 | 3年間 / プレミアムパネル交換（ドット欠け1個から交換対象） |
+| 価格 | 直販 ¥93,800、最安 ¥92,800（2026年5月時点） |
+
+## 評価軸ごとの採点
+
+<ScoreBar label="表示品質（IPS Black / 4K / 120Hz / HDR600）" score={4.6} note="LCD としては最上位クラスの絵作り" />
+<ScoreBar label="拡張性（TB4 / 140W / KVM / 2.5GbE）" score={4.8} note="ドックを兼ねるなら他に並ぶ製品はほぼない" />
+<ScoreBar label="ファームウェア安定性" score={3.2} note="フリーズ・USB-C 認識の報告が複数。減点要因" />
+<ScoreBar label="価格に対する満足度" score={3.8} note="9万円台。前モデル U2723QE が円安前は7万円前後だったことを思うと割高感はある" />
+<ScoreBar label="長期保証（3年プレミアム交換）" score={4.7} note="ドット欠け1個から交換は実務上ありがたい" />
+<ScoreBar label="総合" score={4.3} />
+
+## 競合との位置づけ
+
+同じ「4K 27インチ・USB-C ドック型」カテゴリで実務的に競合するモデルと並べる。
+
+<ComparisonGrid
+  axes={["画質", "給電", "KVM/ハブ", "保証", "総合"]}
+  products={[
+    {
+      name: "Dell U2725QE",
+      subtitle: "IPS Black / 120Hz / 140W",
+      scores: { "画質": 4.6, "給電": 4.9, "KVM/ハブ": 4.8, "保証": 4.7, "総合": 4.3 },
+      comment: "ハブ + KVM + 保証で勝負する全部入り。ファームウェア懸念だけ要事前確認。",
+    },
+    {
+      name: "Dell U2723QE（前モデル）",
+      subtitle: "IPS Black / 60Hz / 90W",
+      scores: { "画質": 4.4, "給電": 4.0, "KVM/ハブ": 4.5, "保証": 4.7, "総合": 4.2 },
+      comment: "中古・在庫処分が出回り始めている。60Hz でいいなら割安。",
+    },
+    {
+      name: "LG 27UP850N-W",
+      subtitle: "IPS / 60Hz / 96W",
+      scores: { "画質": 4.0, "給電": 3.8, "KVM/ハブ": 3.5, "保証": 3.8, "総合": 4.0 },
+      comment: "価格優先の対抗馬。IPS Black ではないので黒の沈みは1段落ちる。",
+    },
+    {
+      name: "BenQ PD2725U",
+      subtitle: "IPS / 60Hz / 90W / Thunderbolt 3",
+      scores: { "画質": 4.5, "給電": 4.0, "KVM/ハブ": 4.3, "保証": 4.0, "総合": 4.2 },
+      comment: "色精度ではこちらが上。映像系の人はこちら、開発機なら U2725QE。",
+    },
+  ]}
+/>
+
+## 良かった点（情報源の評価傾向から）
+
+### 1. Thunderbolt 4 + 140W EPR で MacBook Pro 16 まで届く
+
+USB PD の **EPR（Extended Power Range）**で 140W が出るのが、前モデルから一番大きい更新だ。前モデル U2723QE の 90W では MacBook Pro 16 インチの最大負荷時にバッテリーが減ることがあったが、本機は仕様上**MacBook Pro 16 を含めた現行 Apple Silicon ラップトップを 1 本のケーブルで賄える**。Windows 機側も、Thunderbolt 4 経由なら 140W まで受けられる機種（ThinkPad P 系・Dell Precision など）でカバーできる。
+
+### 2. KVM スイッチが内蔵されている意味
+
+KVM とは、**1 組のキーボード・マウス・モニターで複数 PC を切り替える機構**のこと。U2725QE は USB-C 10Gbps KVM をモニター側に内蔵している。Mac は Thunderbolt 4 で、Windows は USB-C アップストリームで繋いでおけば、モニター手前のボタン操作でキーボード・マウスの接続先が瞬時に切り替わる。**外付け KVM 機器（1〜3万円）を買わなくていい**のは、特にエンジニアの実務で効く。
+
+### 3. IPS Black の 3000:1 は普通の IPS の 3 倍
+
+IPS Black は LG Display が出した強化型 IPS で、**通常 IPS の 1000:1 を 3000:1 にした**ものだ。VA パネルの 4000:1 には届かないが、IPS の発色を保ったまま黒が沈む。コードを長時間見るときの目の疲れは、コントラストが効いている方が軽い体感がある。これは個人差があるが、**ここは未検証ではなく、複数の海外レビュー（RTINGS、How-To Geek、Windows Central）で言及されている**。
+
+### 4. 3年プレミアムパネル交換保証
+
+Dell の UltraSharp シリーズ全般の特典だが、**ドット欠けが 1 個でも交換対象**になる。9 万円のモニターでこれを 3 年付けてくれるのは、買った後の安心感がある。法人向け以外の家庭用エンジニアにも適用される。
+
+## 気になった点（情報源の不満傾向から）
+
+### 1. ファームウェアの完成度
+
+前述の通り、**フリーズと USB-C 認識不良の報告が複数ある**。Dell はファームウェア更新を順次出しているが、購入直後に最新版へ上げる手間は前提だ。Mac だけで使う人は Dell Display and Peripheral Manager（DDPM）を入れる必要がある。
+
+### 2. 同梱ケーブルが短い
+
+Windows Central のハンズオン記事で指摘されている。Thunderbolt 4 ケーブル・電源ケーブルともに、デスク背面の取り回しを考えると**別途 2m クラスを買い足す前提**で予算を組んだ方がいい。Thunderbolt 4 認証 2m ケーブルは 5,000〜8,000円する。
+
+### 3. 価格の重さ
+
+9 万円は、エントリー帯の 4K（3〜4万円）から乗り換えるには重い金額だ。**「ハブ機能を別途買う必要がない」というロジックで初めて元が取れる**。単に「絵がきれいな 4K」が欲しいだけなら、ASUS PA279CV や LG 27UP850N でも十分だ。
+
+<PullQuote attribution="Patch — gear108">
+ハブが要らない人間に Dell U2725QE は高い。ハブが必要な人間には、ハブ単体 + 別モニターより安い。
+</PullQuote>
+
+## こんな人に向く
+
+- Mac と Windows の 2 台を同じデスクで切り替えるエンジニア
+- MacBook Pro 16（または同等の高出力ラップトップ）を 1 本のケーブルで運用したい人
+- ドット欠けが許せず、3 年の安心保証に価値を感じる人
+- Thunderbolt ハブ単体（3 万円前後）+ モニター（5 万円前後）の合計 8 万円を、1 台に統合したい人
+
+## こんな人には向かない
+
+- ハブ機能を必要としない人（HDMI / DP だけで運用するなら、もっと安いモニターで十分）
+- 単一の Apple Silicon Mac 1 台しか繋がない人（KVM が遊ぶ）
+- ファームウェア問題のロットリスクを許容できない人（発売初期のロット流通在庫を避け、最新ファーム適用済みを買う運用が必要）
+- ゲーミング主眼の人（HDR600 だが、応答速度・低レイテンシ系は同価格帯のゲーミングモニターに劣る）
+
+## 関連記事
+
+- [Realforce R3 と HHKB Pro HYBRID Type-S、エンジニアの実務観点で徹底比較](/roundups/realforce-r3-vs-hhkb-pro-hybrid/) — モニターと並べて使うキーボード選び
+- [新人エンジニア向け2026年版・最初の在宅装備一式](/guides/new-engineer-gear-2026/) — 10万円〜40万円コースで揃える在宅装備の中で、モニターの位置づけ
+
+## まとめ — 4.3 / 5
+
+**動くものだけを納品する**という Patch の戒律で評価するなら、U2725QE は「9 万円ぶんの拡張性は確実に動く。ただし、ファームウェアという小さな包帯を巻きながら運ぶモニターだ」と言う形になる。
+
+絵作り・ハブ機能・保証は文句なしの 4.8 級。ファームウェアの完成度だけが 3.2 級で、ここを直視できる人にだけ勧める。MacBook Pro 16 + Windows ノートの 2 台運用で「**ケーブル 1 本ずつで全部切り替えたい**」という要件があるなら、**現時点で他に並ぶ製品はほぼない**——これが、9 万円という価格に対する一番正直な答えだ。
