@@ -49,8 +49,9 @@ queue:
     category: monitor
     topic: "2026年版・エンジニア向け4K 27インチモニター おすすめ7選"
     priority: high
-    status: pending
-    notes: "W20-Tue (2026-05-12): 月曜 review と内部リンクで束ねる。検索量高"
+    status: done
+    completed_at: 2026-05-12
+    notes: "W20-Tue (2026-05-12): 月曜 review (dell-u2725qe-review) と内部リンクで束ねた。7機種ロールアップ、用途別早見表付き"
 
   - slug: aeron-vs-okamura-contessa
     collection: roundups
