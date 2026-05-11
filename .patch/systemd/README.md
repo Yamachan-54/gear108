@@ -1,15 +1,22 @@
-# systemd user timer: 毎日 1 件の自動投稿
+# systemd user timer: 週 1 件の自動投稿（金曜 21:00 JST）
 
-`write-next.sh` を毎日 21:00 に自動で叩く systemd user timer の本体。
+`write-next.sh` を **毎週金曜 21:00** に自動で叩く systemd user timer の本体。
 
 このディレクトリは **版管理用のコピー**。実体は `~/.config/systemd/user/` に置く。
+
+## なぜ金曜 21:00 か（Beacon の判断）
+
+- エンジニア向けガジェット記事は「週末の購買検討」フローで読まれる → 金〜土が窓
+- 金曜夜は X/Twitter のエンジニア層が最もアクティブ（仕事終わり→週末モード）
+- はてブ / Zenn 経由の流入も平日 21 時台がピーク
+- 土曜 10:00 がサブピーク（Google Discover 経由の腰据え読み）。切り替えるなら `OnCalendar=Sat *-*-* 10:00:00`
 
 ## 構成
 
 | ファイル | 役割 |
 |---------|------|
 | `gear108-write-next.service` | oneshot サービス。`.patch/scripts/write-next.sh` を呼ぶ |
-| `gear108-write-next.timer` | 毎日 21:00 の起動定義（`Persistent=true` で missed run も拾う） |
+| `gear108-write-next.timer` | 金曜 21:00 起動定義（`Persistent=true` で missed run も拾う） |
 
 ## インストール
 
@@ -55,6 +62,7 @@ systemctl --user disable --now gear108-write-next.timer
 
 ## 既知の制約
 
-- timer が走るのは 21:00 + ランダム遅延 0〜5 分。記事生成は通常 5〜15 分かかるので、深夜 0 時を跨ぐことはほぼない
-- ビルド失敗時は draft 化して終了。次回 run で別の pending を選ぶ
+- timer が走るのは 金曜 21:00 + ランダム遅延 0〜5 分。記事生成は通常 5〜15 分かかるので、土曜に跨ぐことはほぼない
+- ビルド失敗時は draft 化して終了。**翌週まで投稿空白**になるので cron.log の週次目視は必須
 - main の branch protection（CI build-check pass 必須）が満たされないと PR は止まる
+- 週 1 ペースなら articles.yml 残 26 本で約半年（〜2026-11 まで）持つ。月次で weekly-review.sh による refill 想定

@@ -1,8 +1,14 @@
 [Unit]
-Description=gear108 write-next daily timer (every day at 21:00)
+Description=gear108 write-next weekly timer (every Friday at 21:00 JST)
 
 [Timer]
-OnCalendar=*-*-* 21:00:00
+# 金曜 21:00 を選んだ理由（Beacon）:
+#   - エンジニア向けガジェット記事は「週末の購買検討」フローで読まれる
+#   - 金曜夜は X/Twitter のエンジニア層が最もアクティブ（仕事終わり→週末モード）
+#   - はてブ / Zenn 経由の流入も平日 21 時台がピーク
+# サブピーク: 土曜 10:00（Google Discover 経由の腰据え読み）に切り替える場合は
+#   OnCalendar=Sat *-*-* 10:00:00 に変更
+OnCalendar=Fri *-*-* 21:00:00
 Persistent=true
 RandomizedDelaySec=300
 Unit=gear108-write-next.service
