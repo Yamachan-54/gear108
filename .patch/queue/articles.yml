@@ -58,8 +58,9 @@ queue:
     category: desk
     topic: "アーロンチェア リマスタード vs オカムラ コンテッサ セコンダ：エンジニアの腰を救うのは"
     priority: high
-    status: pending
-    notes: "W20-Wed (2026-05-13): flexispot seed と隣接。客単価高"
+    status: done
+    completed_at: 2026-05-12
+    notes: "W20-Wed 予定枠を 2026-05-12 火曜に前倒し公開。Beacon Go、4軸（姿勢/体型/保証/座面）で構成"
 
   - slug: m4-macbook-air-vs-mac-mini
     collection: roundups
