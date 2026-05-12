@@ -1,7 +1,7 @@
 name: notify-discord
 
-# main への push かつ src/content 配下に変更があった時のみ走る。
-# 新規追加された .md/.mdx を検出して Discord に Patch ペルソナで通知する。
+# main への push かつ src/content 配下に変更があった時のみ自動発火。
+# workflow_dispatch で手動テスト可能 (最新記事の通知を再送)。
 
 on:
   push:
@@ -9,6 +9,12 @@ on:
     paths:
       - 'src/content/**/*.md'
       - 'src/content/**/*.mdx'
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: 'スラッグ指定 (省略時は main の最新記事を再通知)'
+        required: false
+        type: string
 
 jobs:
   notify:
@@ -17,7 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 差分計算のため全履歴を取得
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -26,9 +32,11 @@ jobs:
 
       - run: npm ci
 
-      - name: Notify Discord on new articles
+      - name: Notify Discord
         env:
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
           BEFORE_SHA: ${{ github.event.before }}
           AFTER_SHA: ${{ github.sha }}
+          MANUAL_SLUG: ${{ inputs.slug }}
           DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
         run: node .github/scripts/notify-discord.mjs
