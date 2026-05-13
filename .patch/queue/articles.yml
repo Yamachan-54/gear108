@@ -31,9 +31,8 @@ queue:
     completed_at: 2026-05-09
     notes: "W19-Mon: ピラー記事。サイト全体の内部リンクハブにする"
 
-  # ─── 2026-W20 picks（週次レビューで Patch が選定。Mon→Fri の順）───
-  # 並びの根拠は .patch/reports/weekly-2026-W19.md の「来週の方針」を参照。
-  # 2026-W19 の繰越4本 + cherry-mx を金曜枠に昇格して計5本。
+  # ─── 2026-W20 picks（完了分）───
+  # 集計レポート: .patch/reports/weekly-2026-W20.md
   - slug: dell-u2725qe-review
     collection: reviews
     category: monitor
@@ -62,13 +61,19 @@ queue:
     completed_at: 2026-05-12
     notes: "W20-Wed 予定枠を 2026-05-12 火曜に前倒し公開。Beacon Go、4軸（姿勢/体型/保証/座面）で構成"
 
+  # ─── 2026-W21 picks（週次レビュー中間版で Patch が選定。Mon→Thu の 4 本、金曜は systemd 週 1 自動枠）───
+  # 並びの根拠は .patch/reports/weekly-2026-W20.md「来週の方針」。
+  # W20 picks 残り 2 本（m4 / cherry-mx）を繰越 + ergotron-lx / usb-c-hub を新規昇格。
+  # カテゴリ分布: pc(1) / keyboard(1) / desk(1) / peripheral(1) ── 完全分散。
+  # Rudder「W21 でやらないこと 3 つ」: news 系 / split-keyboard / low priority 全般。
   - slug: m4-macbook-air-vs-mac-mini
     collection: roundups
     category: pc
     topic: "M4 MacBook Air と M4 Mac mini、開発機にするならどちらか"
     priority: high
-    status: pending
-    notes: "W20-Thu (2026-05-14): m4-mac-mini-dev-machine seed と軸違い（形態の選び方）で補完"
+    status: done
+    completed_at: 2026-05-13
+    notes: "W20-Wed (2026-05-13) に公開（同時起動衝突で停止していたところを手動再開して完走）。Beacon Go 済み、4軸（形態/総額/メモリ/熱）+ ComparisonGrid 構成。m4-mac-mini-dev-machine と軸違いで補完"
 
   - slug: cherry-mx-axis-comparison-2026
     collection: guides
@@ -76,7 +81,24 @@ queue:
     topic: "Cherry MX 軸別の選び方ガイド：赤・青・茶・黒・銀軸 5種をエンジニア用途で比較"
     priority: high
     status: pending
-    notes: "W20-Fri (2026-05-15): realforce / hhkb-studio との内部リンクハブ。W20 で keyboard 厚み追加"
+    notes: "W21-Tue (2026-05-19) に繰越。W20-Fri 予定だったが週 1 自動運用切替に伴い手動枠へ移送。realforce / hhkb-studio との内部リンクハブ"
+
+  - slug: monitor-arm-ergotron-lx-review
+    collection: reviews
+    category: desk
+    topic: "Ergotron LX モニターアームを5年使ったレビュー。妥協しないアーム選び"
+    product: "Ergotron LX"
+    priority: high
+    status: pending
+    notes: "W21-Wed (2026-05-20): normal → high 昇格。flexispot-e7-review / aeron-vs-okamura-contessa と内部リンクで束ねる。desk 実機レビュー厚み追加"
+
+  - slug: usb-c-hub-engineer-best
+    collection: roundups
+    category: peripheral
+    topic: "エンジニア向け USB-C ハブ おすすめ5選。Ethernet・HDMI・SD全部入り"
+    priority: high
+    status: pending
+    notes: "W21-Thu (2026-05-21): normal → high 昇格。peripheral カテゴリ初投入。dell-u2725qe-review / m4-mac-mini-dev-machine と内部リンクで束ねる"
 
   # ─── キーボード ───
   - slug: keychron-q1-pro-review
@@ -120,26 +142,14 @@ queue:
     priority: normal
     status: pending
 
-  - slug: monitor-arm-ergotron-lx-review
-    collection: reviews
-    category: desk
-    topic: "Ergotron LX モニターアームを5年使ったレビュー。妥協しないアーム選び"
-    product: "Ergotron LX"
-    priority: normal
-    status: pending
+  # monitor-arm-ergotron-lx-review は W21 picks に昇格済（先頭ブロック参照）
+  # usb-c-hub-engineer-best も同様に W21 picks に昇格済
 
   # ─── 周辺機器 ───
   - slug: gan-charger-100w-best
     collection: roundups
     category: peripheral
     topic: "100W GaN充電器 おすすめ5選。MacBook Pro 16 + iPhone + Watch を1台で"
-    priority: normal
-    status: pending
-
-  - slug: usb-c-hub-engineer-best
-    collection: roundups
-    category: peripheral
-    topic: "エンジニア向け USB-C ハブ おすすめ5選。Ethernet・HDMI・SD全部入り"
     priority: normal
     status: pending
 
