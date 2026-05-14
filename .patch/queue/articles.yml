@@ -80,8 +80,9 @@ queue:
     category: keyboard
     topic: "Cherry MX 軸別の選び方ガイド：赤・青・茶・黒・銀軸 5種をエンジニア用途で比較"
     priority: high
-    status: pending
-    notes: "W21-Mon (2026-05-18) に繰越。W20-Fri 予定だったが週 1 自動運用切替に伴い手動枠へ移送。realforce / hhkb-studio との内部リンクハブ"
+    status: done
+    completed_at: 2026-05-14
+    notes: "W20-Thu (2026-05-14) に手動指示で前倒し公開（W21-Mon 繰越枠から繰上げ）。realforce / hhkb-studio / new-engineer-gear-2026 と内部リンクで束ねた。Beacon Go、5 軸 ComparisonGrid + MX2A 追加メモ構成"
 
   - slug: monitor-arm-ergotron-lx-review
     collection: reviews
