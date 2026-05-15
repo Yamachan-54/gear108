@@ -90,8 +90,9 @@ queue:
     topic: "Ergotron LX モニターアームを5年使ったレビュー。妥協しないアーム選び"
     product: "Ergotron LX"
     priority: high
-    status: pending
-    notes: "W21-Tue (2026-05-19): normal → high 昇格。flexispot-e7-review / aeron-vs-okamura-contessa と内部リンクで束ねる。desk 実機レビュー厚み追加"
+    status: done
+    completed_at: 2026-05-15
+    notes: "W20-Fri (2026-05-15) に W21-Tue 枠を前倒し公開。flexispot-e7-review / aeron-vs-okamura-contessa / new-engineer-gear-2026 と内部リンクで束ねた。Beacon Go（10年保証 vs Amazon Basics OEM 同一性が差別化軸）、5 軸 ComparisonGrid + ScoreBar 6 本構成"
 
   - slug: usb-c-hub-engineer-best
     collection: roundups
