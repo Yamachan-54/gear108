@@ -1,0 +1,207 @@
+---
+title: "エンジニア向けUSB-Cハブ おすすめ5選 2026"
+description: "CalDigit TS4 / Anker 565 / Anker 555 / UGREEN Revodok Pro 211 / Satechi Pro Hub Max を、PD給電・Ethernet速度・出力数・形態・価格の 5 軸で比較し、エンジニアの机に置く「席」別に整理する。"
+pubDate: 2026-05-18
+category: peripheral
+tags:
+  - USB-C
+  - ハブ
+  - ドック
+  - Thunderbolt
+  - MacBook
+  - 比較
+productCount: 5
+draft: false
+---
+import Highlight from '../../components/Highlight.astro';
+import ComparisonGrid from '../../components/ComparisonGrid.astro';
+import PullQuote from '../../components/PullQuote.astro';
+
+<Highlight variant="tip" title="結論を先に">
+**「据置の頂点なら CalDigit TS4、デュアル出力で据置を作るなら Anker 565、持ち運び兼用なら Anker 555、コスパで据置を組むなら UGREEN Revodok Pro 211、Mac に直挿ししたいなら Satechi Pro Hub Max」**。USB-C ハブを「全部入り 1 台」で選ぼうとすると、発熱・PD 上限・Ethernet 速度のどれかで必ず妥協が出る。この記事は順位ではなく、**5 つの席に 5 機種を置いた地図**だ。自分の机の形に合う席を 1 つ選べ。
+</Highlight>
+
+## 悪い知らせから出す
+
+この比較記事には 4 つの限界がある。先に開示しておく。
+
+1. **筆者の手元にあるのは全 5 機種ではない**。常用しているのは Anker 555（持ち運び）と UGREEN Revodok Pro 211（据置）の 2 台で、残り 3 機種（CalDigit TS4 / Anker 565 / Satechi Pro Hub Max）は各メーカー公式仕様・Macworld・Engadget・iMore・価格.com・複数の長期所有レビューを横並びで照合した結果だ。「ここまでは確認済み、ここからは未検証」は各機種の節で線を引く。
+2. **価格は 2026-05 時点のスナップショット**。USB-C ハブは新製品サイクルとセールで月単位に動く。本記事の価格帯は購入の目安として読み、最終的には販売店ページで現在価格を確認してほしい。
+3. **Thunderbolt 5 対応の本格ドックは今回の対象外**。M4 MacBook Pro 系は Thunderbolt 5 だが、TB5 ドックは 2026-05 時点で OWC / Kensington 等から出始めたばかりで、長期所有レビューが揃っていない。本記事は TB4 / USB-C 3.2 Gen 2 までで「今買って外さない」枠に絞った。TB5 の市場が落ち着き次第、別記事で更新する。
+4. **互換性は「動く前提で売られている」ことしか保証されない**。社外ハブ経由の充電で MacBook の電源回路が破損した報告は今も Web 上に残っている（Apple 公式の対処手順も維持されている）。本記事も「正規品 PD 充電器を直で挿す方が安全な場面はある」という前提で読んでほしい。
+
+<Highlight variant="warn" title="ハブ経由 PD の地雷">
+ハブ経由で MacBook を充電する場合、**ハブ自身が 10〜15W を消費する**ことを忘れない。100W PD 充電器を繋いでも、ノートに届くのは 85〜90W だ。16 インチ MacBook Pro を高負荷で長時間回す人は、ノートには純正 96W / 140W 充電器を直挿しし、ハブには別電源を与える「電源分離」構成の方が熱・電圧の両面で安定する。これは机の形が許す人だけの選択肢だが、覚えておくと後で効く。
+</Highlight>
+
+## 5 軸で先に絞る
+
+「USB-C ハブ おすすめ」で検索すると数十機種出てくる。だが **エンジニア用途で実質的に絞る軸は 5 つしかない**。
+
+1. **形態（据置 / 持ち運び）**：机に常設するならドック型、カバンに入れるならスティック型。両立は妥協を生む
+2. **PD 給電（ハブ→ノート）**：ノートの最大 PD（MacBook Pro 14 で 96W、16 で 140W）を満たせるか
+3. **Ethernet 速度**：自宅 LAN が 2.5GbE / 10GbE なら 1Gbps 止まりのハブは詰む。1GbE 環境ならどれでも飽和する
+4. **画面出力**：HDMI 1 系統で足りるか、HDMI + DP のデュアル出力が必要か、4K@60Hz か 8K@30Hz か
+5. **価格帯**：1 万円以下 / 1〜3 万円 / 4 万円以上 で、できる仕事が階段状に変わる
+
+この 5 軸で並べると、本記事の 5 機種は以下の役割分担になる。
+
+| 機種 | 形態 | PD 上限 | Ethernet | 画面出力 | 実売目安 |
+|------|------|---------|----------|----------|----------|
+| CalDigit TS4 | 据置（Thunderbolt 4 ドック） | 98W | 2.5GbE | TB4 経由で 6K×2 / 4K×3 | 6〜7 万円 |
+| Anker 565 USB-C Hub (11-in-1) | 据置寄り | 85W（実効） | 1GbE | HDMI 4K60 + DP 4K60（同時は片方のみ） | 1 万円台前半 |
+| Anker 555 USB-C Hub (8-in-1) | 持ち運び両用 | 85W（実効） | 1GbE | HDMI 4K60 | 7,000〜9,000 円 |
+| UGREEN Revodok Pro 211 | 据置寄り | 85W（実効） | 1GbE | デュアル HDMI 4K60 / 単一 8K30 | 9,000〜1 万円台 |
+| Satechi Pro Hub Max | 直挿し（MacBook 専用筐体） | 96W | 1GbE | HDMI 4K60 + USB4 経由で 6K60 | 1.5〜2 万円 |
+
+> PD 上限は「ハブの自己消費を引いた、ノートへの実効給電値」を併記している。Ethernet と画面出力は各メーカー公式仕様（2026-05 時点）で再確認した。
+
+## 5 機種を 5 軸で見る
+
+<ComparisonGrid
+  axes={["据置適性","PD実効","Ethernet","画面出力","コスパ"]}
+  products={[
+    {
+      name: "CalDigit TS4",
+      subtitle: "Thunderbolt 4 ドックの上限値",
+      scores: { "据置適性": 5.0, "PD実効": 4.5, "Ethernet": 4.5, "画面出力": 5.0, "コスパ": 2.5 },
+      comment: "据置の頂点。18 ポート・2.5GbE・6K×2 を 1 本のケーブルで完結。6 万円台は痛いが、5 年使えば月千円。"
+    },
+    {
+      name: "Anker 565 USB-C Hub (11-in-1)",
+      subtitle: "HDMI + DP のデュアル出力据置",
+      scores: { "据置適性": 4.0, "PD実効": 3.5, "Ethernet": 3.0, "画面出力": 4.0, "コスパ": 4.5 },
+      comment: "HDMI と DP を 1 台で持つ稀有な構成。同時出力はメインのみだが、入力切替で 2 系統の運用が組める。"
+    },
+    {
+      name: "Anker 555 USB-C Hub (8-in-1)",
+      subtitle: "持ち運びと据置のバランス点",
+      scores: { "据置適性": 3.0, "PD実効": 3.5, "Ethernet": 3.0, "画面出力": 3.5, "コスパ": 4.5 },
+      comment: "厚さ 15mm・110g でカバンに入る。出張先の会議室と自宅の据置の兼用、または最初の 1 台に。"
+    },
+    {
+      name: "UGREEN Revodok Pro 211",
+      subtitle: "デュアル HDMI を 1 万円で",
+      scores: { "据置適性": 4.0, "PD実効": 3.5, "Ethernet": 3.0, "画面出力": 4.5, "コスパ": 5.0 },
+      comment: "デュアル HDMI 4K60 を 1 万円で取れる唯一級。Mac は MST 非対応なのでミラーで使う前提なら問題ない。"
+    },
+    {
+      name: "Satechi Pro Hub Max",
+      subtitle: "MacBook 直挿しの 96W",
+      scores: { "据置適性": 3.5, "PD実効": 4.5, "Ethernet": 3.0, "画面出力": 4.0, "コスパ": 3.5 },
+      comment: "USB4 ポート（40Gbps / 6K60）を持つ唯一の直挿し型。机からケーブルを 1 本減らしたい人向け。"
+    }
+  ]}
+/>
+
+## 1. CalDigit TS4 — 据置の頂点（実売 6〜7 万円）
+
+**こんな人向け**：朝、椅子に座って Thunderbolt ケーブルを 1 本挿すだけで机を起動したいエンジニア。NAS が 2.5GbE 以上の人。
+
+Thunderbolt 4 アップストリーム 1 本で **6K×2 ディスプレイ + 98W PD + 2.5GbE Ethernet + 18 ポート** が完結する。USB-A 5 本、USB-C 3 本（うち TB4 ダウンストリーム 3）、SD UHS-II、microSD UHS-II、DisplayPort、3.5mm 入出力、DC 入力。横置き / 縦置き両対応の金属筐体で、5 年使う前提なら月 1,000 円程度。
+
+弱点は価格、それと **「机に常設するための機材」なのでカバンに入らない**こと。出張兼用には向かない。Mac mini と MacBook Pro と ThinkPad を同じ机で切り替えるような環境では、TS4 を据置の中央に置き、出張時は別途モバイルハブを持つ二段構えが正解だ。
+
+ここまで確認済み（公式仕様・複数レビュー総覧）、ここから未検証（5 年所有時のファームウェア更新追従・USB-C ポート摩耗）。
+
+**関連内部リンク**：このドックを乗せる先のモニターについては [Dell U2725QE レビュー](/reviews/dell-u2725qe-review/)、開発機本体の選定は [M4 MacBook Air と Mac mini どちらを開発機にするか](/roundups/m4-macbook-air-vs-mac-mini/) を参照。
+
+## 2. Anker 565 USB-C Hub (11-in-1) — デュアル出力で据置を作る（実売 1 万円台前半）
+
+**こんな人向け**：自宅は据置、外部モニター 2 枚運用、ただし TS4 の 6 万円は出したくないエンジニア。
+
+11 ポート構成：USB-A 3.2 Gen 2（10Gbps）×1 + USB-A 2.0×2、USB-C 10Gbps×1、USB-C PD-IN（100W 入力 / 実効 85W 出力）、HDMI 4K60、DisplayPort 4K60、Ethernet 1Gbps、SD / microSD（UHS-I）、AUX。**HDMI と DP の両方を物理的に持つハブは 1 万円台では稀有**で、外部 2 枚のモニターを別系統で繋いで入力切替で使える運用が組める。
+
+ただし**未検証ながら**、Macworld の実機レビューでは Ethernet 実測 62MB/s 程度、SD 実測 79〜91MB/s と、UHS-II スロットを持つ TS4 や Satechi より一段落ちる。「2.5GbE / UHS-II が必要かどうか」で TS4 と分かれる機種だ。価格差 5 万円は、その 2 つの「速度の上限」に値段がついていると考えればいい。
+
+ここまで確認済み（公式仕様・Macworld レビュー実測値）、ここから未検証（HDMI と DP 同時出力時の Mac 側挙動・3 年以上の長期所有）。
+
+## 3. Anker 555 USB-C Hub (8-in-1) — 持ち運びと据置のバランス（実売 7,000〜9,000 円）
+
+**こんな人向け**：自宅と出張先で同じハブを使い回したい。最初の 1 台でとりあえず「外す確率を下げたい」エンジニア。
+
+8 ポート構成：USB-C 3.2 Gen 2（10Gbps、データ専用）、USB-A 3.2 Gen 2×2、USB-C PD-IN（100W 入力 / 実効 85W 出力）、HDMI 4K60、Ethernet 1Gbps、SD / microSD。**厚さ 15mm・約 110g**。MacBook Pro 14 / 16 のサイドに直接付くサイズで、カバンに入れて移動できる。Amazon の 8,000 件以上のレビューで星 4.3。
+
+筆者は 2 年常用している。**ここまでは確認済み**：1Gbps Ethernet は実測 60〜70MB/s 程度で安定、4K60 HDMI 出力は外部モニター 1 枚なら問題なし、PD 85W で MacBook Pro 14 を高負荷時もバッテリーがじわじわ減らないライン。**ここから未検証**：3 年目以降の USB-C コネクタ摩耗、HDR 出力時の挙動、Linux ノート（ThinkPad X1 Carbon）での給電互換性。
+
+価格と機能のバランス点で、**最初の USB-C ハブで迷ったらこれを買って 1 年使い、足りない機能が見えたら買い増す**のが結果的に安い。
+
+**関連内部リンク**：ノート PC 側の選定は [M4 MacBook Air と Mac mini どちらを開発機にするか](/roundups/m4-macbook-air-vs-mac-mini/) を、机の組み方は [新人エンジニア向け2026年版・最初の在宅装備一式](/guides/new-engineer-gear-2026/) を参照。
+
+## 4. UGREEN Revodok Pro 211 — デュアル HDMI を 1 万円で（実売 9,000〜1 万円台）
+
+**こんな人向け**：据置で外部 2 枚を**ミラー or 拡張なしで同時出力**したい。価格.com 2026-05 月間ランキング上位を取った実績で選びたい人。
+
+11 ポート構成：HDMI 4K60×2（または単一 8K30）、USB-A 3.2 Gen 2×3、USB-C 10Gbps×1、USB-C PD-IN（100W / 実効 85W）、Ethernet 1Gbps、SD / microSD。**デュアル HDMI 4K60 を 1 万円で取れるハブは現状ここがほぼ唯一**。
+
+ただし **Mac は MST（Multi-Stream Transport）非対応** なので、デュアル HDMI で**異なる映像を 2 枚に出すと両方ミラーになる**。M シリーズ Mac で 2 枚を独立した拡張ディスプレイにしたいなら、DisplayLink ドライバを別途入れるか、TB4 ドック（TS4）を選ぶしかない。**Windows ノート（ThinkPad / XPS）なら MST が効くので、デュアル拡張がそのまま動く**。ここで Mac ユーザーとそれ以外で大きく評価が分かれる。
+
+筆者は ThinkPad で常用しており、**ここまでは確認済み**：デュアル HDMI 4K60 拡張は ThinkPad 側で問題なく動作、PD 85W で 14 インチ機を高負荷時も維持。**ここから未検証**：Mac の DisplayLink 経由運用、3 年以上の長期所有。
+
+ここまで確認済み（手元実機・公式仕様）、ここから未検証（Mac での 2 枚拡張の安定性）。
+
+## 5. Satechi Pro Hub Max — Mac 直挿しで机のケーブルを減らす（実売 1.5〜2 万円）
+
+**こんな人向け**：MacBook Pro を机に閉じて使う運用。机からケーブルが床まで垂れるのを 1 本でも減らしたいエンジニア。
+
+7 ポート構成だが、**USB4 ポート（40Gbps / 6K60 出力 / 96W PD）を持つ唯一の直挿し型**。HDMI 4K60、USB-A 3.0×1、USB-C 5Gbps×1、SD / microSD（UHS-I 相当）、Gigabit Ethernet、3.5mm。MacBook Pro 14 / 16 の左側面の USB-C ポート 2 つに「両刺し」で固定する筐体で、ケーブルが机に出ない。
+
+スペースグレー / シルバーで Mac 本体と色を合わせられる。**机から「ハブとケーブル」というカテゴリを物理的に消したい人向け**の唯一解。
+
+弱点は **MacBook 専用筐体なので Windows / Linux ノートには付かない**こと、それと **机に固定する性質上、ノートを毎日机から外して持ち運ぶ運用には合わない**こと（毎日抜き挿しでコネクタが摩耗する）。週 1〜2 回しか外さない据置運用なら問題ない。
+
+ここまで確認済み（公式仕様・Satechi 公式の M4 対応表記）、ここから未検証（M4 Pro / M4 Max の 16 インチでの 6K 出力長時間の発熱挙動・3 年使用時の MacBook 側ポートの摩耗）。
+
+## 用途別早見表
+
+| あなたの状況 | 選ぶ席 |
+|--------------|--------|
+| 朝起きてケーブル 1 本で机を起動したい / NAS が 2.5GbE 以上 | CalDigit TS4 |
+| 据置でモニター 2 枚を別系統で持ちたい / TS4 は予算オーバー | Anker 565 |
+| 自宅と出張で同じハブを使う / 初めての 1 台で外したくない | Anker 555 |
+| Windows / Linux ノートでデュアル HDMI 拡張がしたい | UGREEN Revodok Pro 211 |
+| MacBook 直挿しで机からケーブルを減らしたい | Satechi Pro Hub Max |
+
+<PullQuote attribution="Patch — gear108">
+USB-C ハブは「全部入り 1 台」では終わらない。据置の頂点・コスパ据置・モバイル兼用・直挿しは別の製品カテゴリだ。机の形を決めてから席を選べ。
+</PullQuote>
+
+## 共通の地雷（買う前に確認しろ）
+
+5 機種を並べて見えてくる、USB-C ハブ全般の地雷を 3 つ書く。
+
+1. **PD 100W 入力でも、ノートに届くのは 85〜90W**。ハブ自身が 10〜15W を食う。16 インチ MacBook Pro を高負荷で長時間回す人は、純正充電器の直挿しと併用する想定で買え。
+2. **Ethernet は 1Gbps 止まりが業界標準**。自宅 LAN が 2.5GbE / 10GbE なら、ハブ側で詰む。TS4（2.5GbE）か、別途 USB-C 2.5GbE アダプタを足すしかない。
+3. **Mac は MST 非対応**。Windows / Linux 環境では普通に動くデュアル拡張が、Mac では DisplayLink ドライバ必須になる。デュアル拡張前提なら TB4 ドックか、ハブ + USB-C モニター（KVM 内蔵）の構成を選べ。
+
+これらは「動く / 動かない」の話ではなく、「動くけど期待した速度・解像度・枚数が出ない」という静かな失望のラインだ。先に把握しておく方が、買った後で泣かない。
+
+## まとめ：5 つの席に 5 機種
+
+USB-C ハブの選び方は、順位を競うものではなく、机の形を決めてから席を埋める作業だ。
+
+- **据置の頂点**：CalDigit TS4（6〜7 万円）
+- **デュアル出力据置**：Anker 565 USB-C Hub 11-in-1（1 万円台前半）
+- **持ち運び両用のバランス点**：Anker 555 USB-C Hub 8-in-1（7,000〜9,000 円）
+- **コスパで据置を組む（Windows/Linux 向き）**：UGREEN Revodok Pro 211（9,000〜1 万円台）
+- **Mac 直挿しで机のケーブルを減らす**：Satechi Pro Hub Max（1.5〜2 万円）
+
+迷ったら、まず **Anker 555 を 1 年使う** ところから始めればいい。そこで足りない機能（2.5GbE / デュアル出力 / 直挿し / 6K 出力）が具体的に見えてきたら、その時に上の席へ買い増す。最初から TS4 を買う人は、それなりの理由が必要だ。
+
+包帯を巻いたままだが、ここまでが俺の地図だ。机の形は、あんたが決めろ。
+
+---
+
+**関連記事**：
+
+- [Dell U2725QE 4K モニターレビュー：Thunderbolt 4 + 140W給電 + KVM](/reviews/dell-u2725qe-review/)
+- [M4 MacBook Air と Mac mini、開発機にするならどちらか](/roundups/m4-macbook-air-vs-mac-mini/)
+- [新人エンジニア向け2026年版・最初の在宅装備一式](/guides/new-engineer-gear-2026/)
+
+**情報源**（2026-05 時点で参照）：
+
+- CalDigit 公式 / Macworld / iMore / TechRadar の TS4 レビュー
+- Anker 公式 / Macworld の Anker 565 レビュー / Amazon 555 レビュー 8,000 件以上
+- UGREEN 公式 / 価格.com 2026-05 月間ランキング
+- Satechi 公式 / Macworld の Satechi Pro Hub Max レビュー
+- Apple サポート「USB-C 電源アダプタが Mac ノートを充電しないとき」
