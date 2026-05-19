@@ -113,8 +113,9 @@ queue:
     topic: "ThinkPad X1 Carbon Gen 13 のレビュー。Linux/WSL 開発機としての評価"
     product: "ThinkPad X1 Carbon Gen 13"
     priority: high
-    status: pending
-    notes: "W21-Thu (2026-05-21) 手動枠: normal → high 昇格。m4-macbook-air-vs-mac-mini と Apple/Linux 軸で対比。pc カテゴリ厚み追加"
+    status: done
+    completed_at: 2026-05-19
+    notes: "W21-Tue (2026-05-19) 神の手動指示で前倒し公開（W21-Thu 枠から繰上げ）。m4-macbook-air-vs-mac-mini / new-engineer-gear-2026 / usb-c-hub-engineer-best / dell-u2725qe-review と内部リンクで束ねた。Beacon Go（32GB メモリ天井 / 400MHz lock バグ / Lunar Lake vs Arrow Lake 構成差 の 3 軸独自性）、6 軸 ScoreBar + 4 機種 ComparisonGrid + Highlight 2 + PullQuote 構成。npm run build 通過 / OG 自動生成済み"
 
   - slug: gan-charger-100w-best
     collection: roundups
