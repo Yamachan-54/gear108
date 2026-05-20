@@ -122,8 +122,9 @@ queue:
     category: peripheral
     topic: "100W GaN充電器 おすすめ5選。MacBook Pro 16 + iPhone + Watch を1台で"
     priority: high
-    status: pending
-    notes: "W21-Fri (2026-05-22) 21:00 systemd 週 1 自動枠: normal → high 昇格。m4-macbook-air-vs-mac-mini / new-engineer-gear-2026 の Mac 充電動線と束ねる。peripheral 2 本目（接続 vs 電源の軸対比）"
+    status: done
+    completed_at: 2026-05-20
+    notes: "W21-Wed (2026-05-20) 神の手動指示で W21-Fri 枠から前倒し公開。usb-c-hub-engineer-best / m4-macbook-air-vs-mac-mini / new-engineer-gear-2026 と内部リンクで束ねた（peripheral 2 本目: 接続 vs 電源の軸対比成立）。Beacon Go（MacBook Pro 16 で fast-charge 不可の悪い知らせ起点 + 出力配分挙動の軸独自性）、5 軸 ComparisonGrid + Highlight 2 + PullQuote 構成。npm run build 通過 / OG 自動生成済み"
 
   # ─── キーボード ───
   - slug: keychron-q1-pro-review
