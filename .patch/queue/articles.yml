@@ -133,7 +133,9 @@ queue:
     topic: "Keychron Q1 Pro の長期使用レビュー。カスタムキーボード入門としての評価"
     product: "Keychron Q1 Pro"
     priority: normal
-    status: pending
+    status: done
+    completed_at: 2026-05-21
+    notes: "W21-Thu (2026-05-21) 神の手動指示で公開。Q1 Ultra / Q1 Max / Q1 HE 揃った 2026 年に Q1 Pro を選ぶ根拠を整理する独自軸（枯れた QMK/VIA + ホットスワップ + 中古市場の温さ）。realforce-r3-vs-hhkb-pro-hybrid / cherry-mx-axis-comparison-2026 / hhkb-studio-review / new-engineer-gear-2026 と内部リンクで束ねた。Beacon Go（ワイヤレス 90Hz と 1.7kg の悪い知らせ起点 + 世代モデル再評価の軸独自性）、5 軸 ComparisonGrid + Highlight 2 + PullQuote + ScoreBar 6 本構成。npm run build 通過 / OG 自動生成済み"
 
   # ─── モニター ───
   - slug: ultrawide-vs-dual-monitor
