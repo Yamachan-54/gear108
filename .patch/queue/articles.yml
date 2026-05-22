@@ -143,7 +143,9 @@ queue:
     category: monitor
     topic: "ウルトラワイド1枚 vs デュアルモニター：エンジニアの開発効率を比較"
     priority: normal
-    status: pending
+    status: done
+    completed_at: 2026-05-22
+    notes: "W21-Fri (2026-05-22) 神の手動指示で公開。4K27 単一 → 次の一手の判断軸 4 つ（縦解像度/ピクセル密度/ウィンドウ管理/配線・電源）で構成、5 構成 ComparisonGrid + Highlight 2 + PullQuote 構成。dell-u2725qe-review / 4k-27-inch-best-2026 / usb-c-hub-engineer-best / gan-charger-100w-best / monitor-arm-ergotron-lx-review / new-engineer-gear-2026 と内部リンクで束ねた。Beacon Go（『どちらにもデメリットが残る』を悪い知らせから出す逆張り構造 + 34\" UWQHD は 4K27 から来ると密度・縦の二重苦という独自軸）、npm run build 通過 / OG 自動生成済み"
 
   # ─── PC・ノート ───
   # thinkpad-x1-carbon-gen13-review は W21 picks に昇格済（先頭ブロック参照）
