@@ -1,94 +1,58 @@
-# Patch 運用ガイド
+# Patch / Hermes 運用ガイド
 
-> このサイト `gear108` は **Patch**（管理人格）に運営を委譲している。
-> 本ドキュメントは、おまえ（人間オペレーター）が必要な初期セットアップと、
-> 緊急時の介入方法だけをまとめたものだ。
+> このサイト `gear108` の継続運用は **Hermes** が担当する。
+> Patch は記事制作・レビューの人格名として残すが、実行主体は旧CLIではなく Hermes cron job と GitHub Project #4 に移行する。
 
 ## 全体像
 
 ```
-[ articles.yml ]──────┐
-                      │  毎日21:00（平日）
-                      ▼
-              [ write-next.sh ]──→ Claude Code (Patch)
-                      │              │
-                      │              ├─ 記事執筆
-                      │              ├─ 自己レビュー
-                      │              ├─ build 検証
-                      │              └─ git push
-                      ▼              │
-              [ src/content/ ]◀──────┘
-                      │
-                      ▼
-              [ git push ]──→ Cloudflare Pages（自動デプロイ）
-                                       │
-                                       ▼
-                              [ gear108.pages.dev ]
-                                       │
-                              [ GitHub Actions ]
-                                       ├─ build-check（push毎）
-                                       └─ health-check（1時間毎）
+[ GitHub Project #4 / Issue ]
+             │
+             ▼
+       [ Hermes cron job ]
+             │
+             ├─ タスク選択・証跡コメント
+             ├─ .patch/scripts/write-next.sh / refresh-old.sh / weekly-review.sh の必要性判断
+             ├─ branch → test/build → PR → merge
+             └─ Issue/PR に検証結果を記録
+             │
+             ▼
+       [ src/content/ ] ──→ [ git push / PR merge ] ──→ Cloudflare Pages
+                                                   │
+                                                   ▼
+                                          [ gear108.pages.dev ]
+                                                   │
+                                                   ▼
+                                          [ GitHub Actions ]
+                                          ├─ build-check（push毎）
+                                          └─ health-check（1時間毎）
 ```
 
-## 1. 初期セットアップ（人間がやること）
+## 1. 運用責任の境界
 
-### 1.1 GitHub リポジトリ作成
+- Hermes が通常運用・Issue整理・小さな改善・検証・PR証跡を担当する。
+- GitHub Project #4 を入口、Issue/PR を証跡の本体として扱う。
+- コードや文書変更は原則として branch → 縦スライスTDDまたは検証可能なテスト → PR → CI → merge で進める。
+- 破壊的操作、認証変更、課金、外部公開、Cloudflare APIトークン作成、ASP/銀行/身分証登録は Hermes が実行せず、Issue に `BLOCKED` として記録する。
 
-```bash
-cd /home/yamachan/Public/Project/gear108
-git init
-git add .
-git commit -m "feat: initial scaffold"
-gh repo create gear108 --public --source=. --remote=origin --push
-```
+## 2. 初期セットアップ（人間がやること）
 
-### 1.2 Cloudflare Pages 接続
+### 2.1 Cloudflare Pages 接続
 
-`docs/DEPLOY.md` の手順に従う。push をトリガに自動デプロイが回るようになる。
+`docs/DEPLOY.md` の手順に従う。push / PR merge をトリガに自動デプロイが回るようにする。
+Cloudflare API トークン作成やGitHub連携の認可は人間専用タスクとして扱う。
 
-### 1.3 Claude Code をローカルにインストール
+### 2.2 Hermes cron job
 
-```bash
-# まだなら
-npm install -g @anthropic-ai/claude-code
-claude --version
-claude login
-```
+このリポジトリ固有のOS cronを増やすのではなく、Yamachan↔Hermesの継続運用は GitHub Project #4 を監視する Hermes cron job に集約する。
+Hermes cron job は次を毎回確認する。
 
-### 1.4 Patch のスクリプトを cron 登録
+1. Project item一覧・field一覧・open Issue一覧
+2. Todoのうち最小で実行可能なユーザー作成タスク
+3. Issue/PRへの開始・検証・完了コメント
+4. Project Status の `In progress` / `Done` 更新
 
-```bash
-crontab -e
-```
-
-以下を追加：
-
-```cron
-# gear108 — Patch 運用
-# 平日 21:00 に記事を1本書く
-0 21 * * 1-5 cd /home/yamachan/Public/Project/gear108 && ./.patch/scripts/write-next.sh >> .patch/reports/cron.log 2>&1
-
-# 日曜 22:00 に古い記事を1本更新
-0 22 * * 0 cd /home/yamachan/Public/Project/gear108 && ./.patch/scripts/refresh-old.sh >> .patch/reports/cron.log 2>&1
-
-# 日曜 23:00 に週次レビュー
-0 23 * * 0 cd /home/yamachan/Public/Project/gear108 && ./.patch/scripts/weekly-review.sh >> .patch/reports/cron.log 2>&1
-```
-
-> **悪い知らせ**：cron は **PCがスリープしていると動かない**。常時稼働マシン（NAS / VPS / Always On のデスクトップ）で運用しろ。
-> ノートPC運用なら、systemd-timer の Persistent=true や、後述の GitHub Actions 経由案を検討せよ。
-
-### 1.5 GitHub Actions（無料の監視）
-
-`.github/workflows/health-check.yml` と `build-check.yml` は push した時点で有効になる。
-追加設定：
-
-- 通知先を有効化したい場合：GitHub の Repo Settings → Secrets → Actions に
-  - `LINE_NOTIFY_TOKEN` または
-  - `SLACK_WEBHOOK_URL`
-  を追加する
-
-### 1.6 ASP登録（人間にしかできない）
+### 2.3 ASP登録（人間にしかできない）
 
 | 申請先 | URL | 必要なもの |
 |--------|-----|-----------|
@@ -97,116 +61,77 @@ crontab -e
 | A8.net | https://www.a8.net/ | 銀行口座 |
 | もしもアフィリエイト | https://af.moshimo.com/ | 銀行口座 |
 
-申請が通ったら、各エントリの `affiliateLinks` を実 URL に書き換える。
-Patch がこれをやることはない（**鋏が届かない領域**）。
+申請が通ったら、各エントリの `affiliateLinks` を実 URL に書き換える作業をIssue化する。
 
-## 2. 通常運用
+## 3. 通常運用
 
-人間が触らないこと前提。Patch が動く。
+Hermes は GitHub Project #4 の `Todo` を確認し、必要に応じて次を実行する。
 
-何もしない週でも、以下が回る：
+- 新記事作成または記事更新のIssue化
+- `.patch/queue/articles.yml` / `.patch/queue/updates.yml` の確認
+- `.patch/scripts/health-check.sh` や GitHub Actions の結果確認
+- build/check/test の実行
+- Issue/PR への証跡コメント
 
-- 平日5本の新記事
-- 日曜1本の古記事リフレッシュ
-- 日曜の週次レビュー
-- 1時間ごとの稼働監視
+## 4. キュー補充
 
-## 3. キュー補充
-
-`articles.yml` の `pending` が 5 本を切ったら、Patch が週次レビューで「キュー補充が必要」と報告する。
-人間がやる作業：
+`articles.yml` の `pending` が 5 本を切ったら、Hermes がProject #4または対象リポジトリに小さなIssueを作成し、重複確認後に補充作業を行う。
+人間が直接補充したい場合は以下を編集してPRまたはcommitする。
 
 ```bash
 $EDITOR .patch/queue/articles.yml
-# 末尾に新しいエントリを追記して push
 ```
 
-または、手動で Patch に補充させる：
+## 5. 緊急停止
+
+### 自動運用を止める
+
+Project #4 の対象Issueに `BLOCKED` コメントを残し、必要なら該当Project itemをTodoへ戻す。
+外部サービス連携の無効化が必要な場合は、人間がCloudflare / GitHub Actions / Secrets側で停止する。
+
+### 進行中のローカル作業を確認する
 
 ```bash
-claude "patch: articles.yml にエンジニア向けガジェットの新規トピックを10本追加してくれ"
-```
-
-## 4. 緊急停止
-
-### 即時に止める
-
-```bash
-# cron を一時停止
-crontab -e
-# 該当行をコメントアウト
-
-# GitHub Actions も止めるなら
-gh workflow disable health-check
-gh workflow disable build-check
-```
-
-### 進行中の作業を止める
-
-```bash
-ps aux | grep -E "write-next|refresh-old|weekly-review|claude"
-kill <PID>
+ps aux | grep -E "write-next|refresh-old|weekly-review|hermes"
 ```
 
 ### 公開済み記事を取り消す
 
 ```bash
 # 該当記事を draft に変える
-# src/content/<collection>/<slug>.md の frontmatter で draft: true
+# src/content/<collection>/<slug>.mdx の frontmatter で draft: true
 
 git add .
 git commit -m "revert: <slug> を一時下書きに戻す"
 git push
-# Cloudflare Pages が自動で再デプロイし、当該記事は404になる
 ```
 
-## 5. 月次コスト試算
+## 6. 月次コスト試算
 
 | 項目 | 月額目安 | 備考 |
 |------|---------|------|
-| Anthropic API（記事執筆 22本/月） | 約 1,500〜3,000円 | 1記事あたり 50〜150円試算 |
-| Anthropic API（更新 4本/月） | 約 200〜500円 | |
+| AI運用・記事執筆 | Hermes側の利用状況に依存 | 旧CLI使用率は0を目標にする |
 | Cloudflare Pages | 0円 | 無料枠 |
 | GitHub Actions | 0円 | パブリックリポなら無制限 |
 | ドメイン | 約 100〜200円/月 | `.com` 換算（年額/12） |
-| **合計** | **約 1,800〜3,700円** | |
 
-> **悪い知らせ**：1年目で月10万円に到達するまで、AIコストは持ち出しになる。
-> 半年で月1万円に届かないなら、戦略を見直す（撤退基準は `docs/PLAN.md` 参照）。
+## 7. Patch の戒律違反を疑ったら
 
-## 6. Patch の戒律違反を疑ったら
-
-公開された記事を読んで、以下のいずれかが起きていたら、人間が止めて修正する：
+公開された記事を読んで、以下のいずれかが起きていたらIssueを作成し、Hermesが検証・修正PRを作る。
 
 - 「100%」「簡単です」「誰でもすぐ」が含まれている
 - 「結論を先に」がない、または末尾にある
 - 「ここまでは確認済み、ここからは未検証」がない
 - ハルシネーション（存在しない製品、誤った価格、捏造の数値）
 
-修正手順：
+## 8. Hermesへの依頼窓口
 
-```bash
-# 該当記事を直接編集 → push
-# または Patch に再執筆させる
-claude "patch: <slug> の記事を、Patchの戒律に従って書き直してくれ。直前のは戒律違反だった"
-```
+- 継続運用: GitHub Project #4
+- 証跡: 対象Issue/PR
+- 運用アンカー: Yamachan-54/HermesAgent Issue #1
 
-## 7. 撤退基準（再掲）
+例:
 
-`docs/PLAN.md` から：
-
-- 6ヶ月で月収1万円に到達しない → SEO戦略の根本的見直し
-- 3ヶ月連続で執筆ペースが週3本を下回る → 運用設計の修正
-- ドメイン全体のインデックスが急減 → スパム判定の疑い、即時 AI 生成停止
-
-## 8. 連絡先（Patch との対話）
-
-```bash
-# 相談・質問・調整
-claude "patch: <自由文>"
-
-# 例
-claude "patch: 来週は HHKB 関連を3本に集中したい。articles.yml を調整してくれ"
-claude "patch: 直近のレポートを読んで、執筆スピードが遅い理由を分析してくれ"
-claude "patch: Search Console のデータをこの形式で渡す。reviews/ の検索順位を見て、リライトすべき記事を優先順位つけて教えてくれ"
-```
+- `gear108 の次の記事キューを補充する`
+- `直近のヘルスチェック結果を見て、異常があればIssue化する`
+- `Search Console のデータをIssueに貼るので、更新候補を優先順位付けする`
