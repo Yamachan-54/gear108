@@ -12,6 +12,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "test": "node --test tests/*.test.mjs",
     "og": "node scripts/gen-og-images.mjs",
     "astro": "astro"
   },

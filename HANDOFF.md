@@ -1,73 +1,33 @@
-# 引き継ぎ — 俺（Patch）の鋏が届かなかった3つ
+# 引き継ぎ — Hermes 運用移行メモ
 
-> サイト基盤・運用骨格・GitHub リポジトリ・GitHub Actions まで自分で組んだ。
-> 残りは「権限・身分証・支払い情報」が要る作業だけだ。
-> ここを越えれば、俺は完全に自走する。
+> `gear108` の継続運用は旧CLIではなく Hermes が担当する。
+> Patch は記事品質・語り口の人格名として残すが、実行・証跡・Project更新は Hermes の責務とする。
 
-## 状況スナップショット（俺がやり終えたこと）
+## 状況スナップショット
 
-- ✅ GitHub リポジトリ作成 + 初回 push: <https://github.com/Yamachan-54/gear108>
-- ✅ GitHub Actions: build-check / health-check（push と毎時で動く）
-- ✅ Cloudflare Pages 初回デプロイスクリプト（`.patch/scripts/cf-pages-init.sh`）
-- ✅ systemd ユーザータイマーのユニットファイル作成（未起動、後述）
-- ✅ Patch 運用骨格（30本記事キュー、4プレイブック、4スクリプト、1運用ガイド）
+- ✅ GitHub リポジトリ: <https://github.com/Yamachan-54/gear108>
+- ✅ GitHub Actions: build-check / health-check
+- ✅ Cloudflare Pages 初回デプロイスクリプト: `.patch/scripts/cf-pages-init.sh`
+- ✅ Patch 運用骨格: 記事キュー、プレイブック、スクリプト、運用ガイド
+- ✅ Hermes移行後の入口: GitHub Project #4 と対象Issue/PR
 
-## おまえに残した3つ
+## 人間に残る作業
 
-### ①【1コマンド】systemd タイマーを起動する
+### ① Cloudflare Pages の認可・接続
 
-ユニットファイルは書いた。あとは `daemon-reload` + `enable` だけ。
-**コピペで叩け：**
-
-```bash
-! systemctl --user daemon-reload && systemctl --user enable --now patch-write-next.timer patch-refresh-old.timer patch-weekly-review.timer && systemctl --user list-timers patch-* --no-pager
-```
-
-これで以下が永続化される：
-
-| タイマー | 実行頻度 |
-|---------|---------|
-| `patch-write-next.timer` | 月〜金 21:00 JST |
-| `patch-refresh-old.timer` | 日曜 22:00 JST |
-| `patch-weekly-review.timer` | 日曜 23:00 JST |
-
-**ノートPCでログアウト中も動かしたいなら**（任意）：
-
-```bash
-! sudo loginctl enable-linger yamachan
-```
-
-### ②【1往復】Cloudflare Pages にデプロイする
-
-俺の鋏は CF API トークンを持っていない。トークンだけ取って渡してくれ。
-
-**手順A：手動で初回デプロイ（5分）**
-
-1. <https://dash.cloudflare.com/profile/api-tokens> を開く
-2. **Create Token** → **Edit Cloudflare Workers** テンプレートを選ぶ（または **Custom Token**）
-3. Account 範囲、`Cloudflare Pages:Edit` 権限のみ付与
-4. トークンをコピー
-5. ターミナルで実行：
-
-```bash
-! cd /home/yamachan/Public/Project/gear108 && export CLOUDFLARE_API_TOKEN=<コピーしたトークン> && ./.patch/scripts/cf-pages-init.sh
-```
-
-完了すれば `https://gear108.pages.dev` が生まれる。
-
-**手順B：GitHub と連携して以後自動デプロイ（推奨、もう5分）**
+Cloudflare API トークン作成、GitHub連携、Pagesプロジェクト作成は認証と外部公開を伴うため人間専用。
 
 1. <https://dash.cloudflare.com/?to=/:account/pages/new> を開く
 2. **Connect to Git** → GitHub認証 → `Yamachan-54/gear108` を選ぶ
 3. **Framework preset**: Astro
 4. **Build command**: `npm run build`
 5. **Build output directory**: `dist`
-6. Save → 以後 `git push` するたびに自動デプロイ
+6. Save → 以後 `git push` / PR merge で自動デプロイ
 
-### ③【数日かかる、人間専用】ASP・アフィリエイト申請
+### ② ASP・アフィリエイト申請
 
-身分証アップロードと銀行口座の登録があるため、俺の鋏では完全に届かない。
-記事10〜20本でドメイン年齢が出てから申請するのが通過率高い：
+身分証アップロードと銀行口座の登録があるため、人間専用。
+記事内の `affiliateLinks` プレースホルダを実URLに差し替える作業は、申請通過後にIssue化すればHermesが対応する。
 
 | 優先度 | サービス | URL | 通過まで |
 |--------|---------|-----|---------|
@@ -77,34 +37,22 @@
 | 中 | もしもアフィリエイト | <https://af.moshimo.com/> | 数日 |
 | 中 | バリューコマース | <https://www.valuecommerce.ne.jp/> | 数日〜1週間 |
 
-通過したら俺に教えてくれ。記事内の `affiliateLinks` プレースホルダを実 URL に書き換える作業は、俺がやる。
+## Hermes がやること
 
----
+1. GitHub Project #4 のTodoを確認する。
+2. `gear108` のIssueを証跡本体として扱う。
+3. 必要な場合はブランチを切り、テスト・build・PR・mergeで小さく完了する。
+4. CloudflareやASPなど人間認証が必要な作業は `BLOCKED` としてIssueへ記録する。
+5. サイト正常稼働は GitHub Actions と `npm run build` / `npm run check` / `npm test` の結果で確認する。
 
-## ①+② が終わったら俺がやること（自走モード突入）
+## 動作確認
 
-1. 平日21時に `articles.yml` から1本ずつ書き、push、Cloudflare が自動デプロイ
-2. 日曜22時に古記事リフレッシュ
-3. 日曜23時に週次レビュー、`articles.yml` 優先順位調整
-4. 1時間ごとに GitHub Actions が稼働監視、失敗したらログ
-5. 日次レポートを `.patch/reports/YYYY-MM-DD.md` に残す
-
-何かおかしい挙動を見たら、俺に直接話しかけてくれ：
+記事生成やキュー処理を変更する前に、以下を確認する。
 
 ```bash
-claude "patch: 直近のレポート読んで、何か起きてないか教えてくれ"
+npm test
+npm run check
+npm run build
 ```
 
----
-
-## 動作確認（タイマーが動く前に手動テスト）
-
-最初の記事を**今すぐ1本**書かせたいなら：
-
-```bash
-! cd /home/yamachan/Public/Project/gear108 && ./.patch/scripts/write-next.sh
-```
-
-10〜20分かかる。完了すると `articles.yml` の先頭エントリが `done` になり、`src/content/roundups/realforce-r3-vs-hhkb-pro-hybrid.md` のような記事が生まれて、git に commit され push される。
-
-ただし、**現状では Cloudflare Pages 連携前なので、本番には反映されない**。①+② を済ませてから、または最初の1本は手動でテスト→確認→Cloudflare連携、の順でも良い。
+Hermes は結果をIssue/PRに記録し、Project Statusを更新する。
